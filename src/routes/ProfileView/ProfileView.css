@@ -4,12 +4,12 @@
 }
 
 .inner_remaining{
-    flex-grow : 1;
+    flex-grow : 0.9;
 }
 
 .inner_wrapper{
     display: flex;
     flex-flow: column;
-    height: 100%;
-    margin: 1% 2% 2.5% 1%;
+    flex-grow : 0.1;
+    height: 95%;
 }

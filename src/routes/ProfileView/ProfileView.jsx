@@ -22,7 +22,7 @@ const ProfileView = (props) => {
                 <AppProfileCard />
             }
           </Grid>
-          <Grid item xs={12} md>
+          <Grid item xs={12} md style={{marginRight: 15}}>
             {
               props.match.params.id ?
                 <AppViewProfileDetails uid={props.match.params.id} />
