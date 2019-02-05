@@ -1,0 +1,10 @@
+.wrapper{
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.profile-image{
+    flex-grow: 1;
+    min-height: 250px;
+}

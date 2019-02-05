@@ -1,0 +1,15 @@
+.outer{
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+.inner_remaining{
+    flex-grow : 1;
+}
+
+.inner_wrapper{
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    margin: 1% 2% 2.5% 1%;
+}

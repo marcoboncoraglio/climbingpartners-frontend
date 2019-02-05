@@ -1,0 +1,10 @@
+.outer{
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+.inner_remaining{
+    flex-grow : 1;
+}
