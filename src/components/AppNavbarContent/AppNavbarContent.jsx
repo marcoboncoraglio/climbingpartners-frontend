@@ -2,7 +2,6 @@ import React from 'react';
 import './AppNavbarContent.css'
 
 import { NavLink } from 'react-router-dom';
-import { auth } from '../../firebase/Firebase'
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,6 +15,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import SettingsIcon from '@material-ui/icons/Settings'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import PeopleIcon from '@material-ui/icons/People'
+
+import {logoutUser} from '../../actions/LoginActions';
 
 const NavbarContent = () => {
   return (
@@ -66,7 +67,7 @@ const NavbarContent = () => {
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>
-          <NavLink onClick={() => auth.signOut()} to="/welcome">
+          <NavLink to="/welcome" onClick={()=> {logoutUser()}}>
             <ListItemText>Logout</ListItemText>
           </NavLink>
         </ListItem>

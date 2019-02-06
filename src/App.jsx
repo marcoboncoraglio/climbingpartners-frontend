@@ -11,7 +11,8 @@ import WelcomeView from './routes/WelcomeView/WelcomeView';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { auth } from './firebase/Firebase'
-import { loginUser } from './actions/UserActions'
+import { loginUser } from './actions/LoginActions'
+import LoginStore from './stores/LoginStore'
 
 
 class App extends Component {
@@ -24,11 +25,11 @@ class App extends Component {
 
     auth.onAuthStateChanged((user) => {
       if (user) {
-        loginUser(user.uid, user.displayName, user.photoURL);
+        loginUser(user);
         this.setState({ loggedIn: true });
       }
       else {
-        this.setState({ loggedIn: false })
+        this.loggedIn = LoginStore.isLoggedIn();
       }
     });
   }

@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 import { db } from "../firebase/Firebase";
-import { IUserDetails, IUserCard } from "../interfaces/interfaces";
+import { IUserDetails, IUserCard } from "../interfaces/UserInterfaces";
 
 class UserStore extends EventEmitter {
   uid: string = "0";
@@ -68,7 +68,7 @@ class UserStore extends EventEmitter {
     }
   }
 
-  //probably dont want to pass entire user, just properties
+  //TODO: dont want to pass entire user, just properties
   setDetails(details: IUserDetails) {
     this.details = details;
     db.ref()
@@ -137,10 +137,6 @@ class UserStore extends EventEmitter {
       }
       case "EDIT_CARD": {
         this.setCard(action.card);
-        break;
-      }
-      case "LOGIN": {
-        this.login(action.uid, action.name, action.imgUrl);
         break;
       }
       default: {

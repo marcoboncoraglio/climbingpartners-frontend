@@ -10,8 +10,3 @@ export interface IUserCard {
     name: string;
     imgUrl: string;
 }
-
-export interface ILocation{
-    lat: number;
-    lng: number;
-}

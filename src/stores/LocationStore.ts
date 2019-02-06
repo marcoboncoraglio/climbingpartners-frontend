@@ -1,20 +1,27 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 import { db } from "../firebase/Firebase";
-import { ILocation } from "../interfaces/interfaces";
+import { ILocation } from "../interfaces/LocationInterfaces";
 
-//TODO: fix this 
-class LocationStore extends EventEmitter{
-    location: ILocation = {
-        lat:0,
-        lng:0
-    }
+class LocationStore extends EventEmitter {
     uid: string = "0";
+    
+    location: ILocation = {
+        lat: 0,
+        lng: 0
+    }
+    
     gpsID: number = 0;
+
     highAccuracy: boolean = false;
 
-    login(uid: string, name: string, imgUrl: string) {
-        this.uid = uid;
+    getId(){
+        return this.uid;
+    }
+
+    //check if locationStore has correct id
+    onLogin(userObject: any) {
+        this.uid = userObject.uid;
     }
 
     setLocation(location: ILocation) {
@@ -24,9 +31,7 @@ class LocationStore extends EventEmitter{
         this.emit("location");
     }
 
-    //TODO: take location from gps connection if enabled
     getLocation() {
-        console.log("high accuracy: " + this.highAccuracy);
         return new Promise((resolve) => {
             navigator.geolocation.getCurrentPosition((position) => {
                 resolve({
@@ -43,35 +48,28 @@ class LocationStore extends EventEmitter{
                             lng: location.longitude
                         };
                     }));
-            }, { enableHighAccuracy:  this.highAccuracy});
+            }, { enableHighAccuracy: this.highAccuracy });
         });
     }
 
-
     enableGPS() {
         this.gpsID = navigator.geolocation.watchPosition(
-            (res) => { this.highAccuracy = true },
+            () => { this.highAccuracy = true },
             () => { this.highAccuracy = false },
-            { enableHighAccuracy:  this.highAccuracy}
+            { enableHighAccuracy: this.highAccuracy }
         );
-        console.log("gps enabled");
     }
 
     disableGPS() {
         navigator.geolocation.clearWatch(this.gpsID);
-        this.highAccuracy = false 
+        this.highAccuracy = false;
         this.gpsID = 0;
-        console.log("gps disabled");
     }
 
     handleActions = (action: any) => {
         switch (action.type) {
             case "SET_LOCATION": {
                 this.setLocation(action.location);
-                break;
-            }
-            case "LOGIN": {
-                this.login(action.uid, action.name, action.imgUrl);
                 break;
             }
             default: {
