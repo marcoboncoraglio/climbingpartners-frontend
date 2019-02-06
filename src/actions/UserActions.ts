@@ -1,5 +1,5 @@
 import dispatcher from '../dispatcher';
-import { IUserDetails, IUserCard, ILocation } from "../interfaces/interfaces";
+import { IUserDetails, IUserCard } from "../interfaces/UserInterfaces";
 
 
 export function editUserDetails(details: IUserDetails){
@@ -17,18 +17,12 @@ export function editUserCard(card: IUserCard){
     })
 }
 
+//TODO: Make loginStore
 export function loginUser(uid: string, name: string, imgUrl: string){
     dispatcher.dispatch({
         type: "LOGIN",
         uid: uid,
         name: name,
         imgUrl: imgUrl
-    })
-}
-
-export function setUserLocation(location: ILocation){
-    dispatcher.dispatch({
-        type: "SET_LOCATION",
-        location: location
     })
 }

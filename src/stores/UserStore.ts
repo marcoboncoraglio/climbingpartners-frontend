@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 import { db } from "../firebase/Firebase";
-import { IUserDetails, IUserCard } from "../interfaces/interfaces";
+import { IUserDetails, IUserCard } from "../interfaces/UserInterfaces";
 
 class UserStore extends EventEmitter {
   uid: string = "0";

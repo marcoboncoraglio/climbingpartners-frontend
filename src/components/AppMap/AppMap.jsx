@@ -4,14 +4,12 @@ import './AppMap.css';
 import { Map, TileLayer, Marker } from 'react-leaflet'
 
 import { db } from '../../firebase/Firebase'
-import { setUserLocation } from '../../actions/UserActions'
+import { setUserLocation } from '../../actions/LocationActions'
 
 
-import UserStore from '../../stores/UserStore';
 import LocationStore from '../../stores/LocationStore';
 
 
-//refactor sending user location to other file, Map should only responsible to display not write
 class AppMap extends Component {
 
   constructor(props) {
@@ -80,7 +78,7 @@ class AppMap extends Component {
         />
         {
           this.state.userLocations.filter((user) => {
-            return (user.key !== UserStore.getId());
+            return (user.key !== LocationStore.getId());
           }).map((user) => {
             const pos = [user.lat, user.lng];
             return (

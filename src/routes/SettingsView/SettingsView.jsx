@@ -12,12 +12,12 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
-import {enableGPS, disableGPS} from '../../services/LocationService';
+import LocationStore from '../../stores/LocationStore'
 
 
 class SettingsView extends Component {
   state = {
-    checked: ['gps'],
+    checked: [],
     searchRadius: 10,
     visibleTo: 0
   };
@@ -27,11 +27,11 @@ class SettingsView extends Component {
     if (newList.includes(element)) {
       const index = newList.indexOf(element);
       newList.splice(index, 1);
-      disableGPS();
+      LocationStore.disableGPS();
     }
     else {
       newList.push(element);
-      enableGPS();
+      LocationStore.enableGPS();
     }
     this.setState({
       checked: newList
