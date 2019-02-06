@@ -12,6 +12,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
+import {enableGPS, disableGPS} from '../../services/LocationService';
+
 
 class SettingsView extends Component {
   state = {
@@ -25,9 +27,11 @@ class SettingsView extends Component {
     if (newList.includes(element)) {
       const index = newList.indexOf(element);
       newList.splice(index, 1);
+      disableGPS();
     }
     else {
       newList.push(element);
+      enableGPS();
     }
     this.setState({
       checked: newList

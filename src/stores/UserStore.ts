@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 import { db } from "../firebase/Firebase";
-import { IUserDetails, IUserCard, ILocation } from "../interfaces/interfaces";
+import { IUserDetails, IUserCard } from "../interfaces/interfaces";
 
 class UserStore extends EventEmitter {
   uid: string = "0";
@@ -129,14 +129,6 @@ class UserStore extends EventEmitter {
     this.emit("login");
   }
 
-  //make location interface
-  setLocation(location: ILocation) {
-    db.ref()
-      .child("locations/" + this.uid)
-      .set(location);
-    this.emit("location");
-  }
-
   handleActions = (action: any) => {
     switch (action.type) {
       case "EDIT_DETAILS": {
@@ -149,10 +141,6 @@ class UserStore extends EventEmitter {
       }
       case "LOGIN": {
         this.login(action.uid, action.name, action.imgUrl);
-        break;
-      }
-      case "SET_LOCATION": {
-        this.setLocation(action.location);
         break;
       }
       default: {

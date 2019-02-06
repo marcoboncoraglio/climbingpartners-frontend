@@ -5,19 +5,19 @@ import { Map, TileLayer, Marker } from 'react-leaflet'
 
 import { db } from '../../firebase/Firebase'
 import { setUserLocation } from '../../actions/UserActions'
-import { getLocation } from '../../services/LocationService'
 
 
 import UserStore from '../../stores/UserStore';
+import LocationStore from '../../stores/LocationStore';
 
 
-//refactor sending user location to other file, Map only responsible to display not write
+//refactor sending user location to other file, Map should only responsible to display not write
 class AppMap extends Component {
 
   constructor(props) {
     super(props);
 
-    getLocation()
+    LocationStore.getLocation()
       .then(location => {
         this.setState({
           location,
