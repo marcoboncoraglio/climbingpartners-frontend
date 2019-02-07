@@ -15,7 +15,7 @@ class LoginStore extends EventEmitter {
     logout(){
         auth.signOut();
         this.UserLoggedIn = false;
-        this.emit("login");
+        this.emit("logout");
     }
 
     getUserName(): string {

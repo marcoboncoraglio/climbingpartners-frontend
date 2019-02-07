@@ -19,19 +19,32 @@ class App extends Component {
   constructor() {
     super();
 
-    this.state = {
-      loggedIn: false
-    }
-
     auth.onAuthStateChanged((user) => {
       if (user) {
         loginUser(user);
-        this.setState({ loggedIn: true });
-      }
-      else {
-        this.loggedIn = LoginStore.isLoggedIn();
+        this.handleLogin();
       }
     });
+  }
+
+  state = {
+    loggedIn: false
+  }
+
+  componentDidMount() {
+    LoginStore.on("logout", this.handleLogout);
+  }
+
+  handleLogin = () => {
+    this.setState({ loggedIn: true });
+  }
+
+  handleLogout = () => {
+    this.setState({ loggedIn: false });
+  }
+
+  componentWillUnmount() {
+    LoginStore.removeListener("logout", this.handleLogout);
   }
 
   render() {
@@ -56,6 +69,7 @@ class App extends Component {
                 <Route path="/welcome" exact component={WelcomeView}></Route>
               </Switch>
             </React.Fragment>
+
         }
       </BrowserRouter>
     );
