@@ -68,7 +68,7 @@ class UserStore extends EventEmitter {
     }
   }
 
-  //probably dont want to pass entire user, just properties
+  //TODO: dont want to pass entire user, just properties
   setDetails(details: IUserDetails) {
     this.details = details;
     db.ref()
@@ -101,11 +101,12 @@ class UserStore extends EventEmitter {
     this.emit("change_card");
   }
 
-  login(uid: string, name: string, imgUrl: string) {
-    this.uid = uid;
+  //TODO: get imgUrl
+  onLogin(userObj: any) {
+    this.uid = userObj.uid;
 
     if (!this.card.name) {
-      this.setName(name);
+      this.setName(userObj.displayName);
     }
 
     db.ref()
@@ -125,8 +126,6 @@ class UserStore extends EventEmitter {
           this.setCard(this.card);
         }
       });
-
-    this.emit("login");
   }
 
   handleActions = (action: any) => {
@@ -140,7 +139,7 @@ class UserStore extends EventEmitter {
         break;
       }
       case "LOGIN": {
-        this.login(action.uid, action.name, action.imgUrl);
+        this.onLogin(action.uObject);
         break;
       }
       default: {

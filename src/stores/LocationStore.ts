@@ -19,8 +19,8 @@ class LocationStore extends EventEmitter {
         return this.uid;
     }
 
-    login(uid: string, name: string, imgUrl: string) {
-        this.uid = uid;
+    onLogin(userObject: any) {
+        this.uid = userObject.uid;
     }
 
     setLocation(location: ILocation) {
@@ -31,7 +31,6 @@ class LocationStore extends EventEmitter {
     }
 
     getLocation() {
-        console.log("high accuracy: " + this.highAccuracy);
         return new Promise((resolve) => {
             navigator.geolocation.getCurrentPosition((position) => {
                 resolve({
@@ -73,7 +72,7 @@ class LocationStore extends EventEmitter {
                 break;
             }
             case "LOGIN": {
-                this.login(action.uid, action.name, action.imgUrl);
+                this.onLogin(action.uObject);
                 break;
             }
             default: {

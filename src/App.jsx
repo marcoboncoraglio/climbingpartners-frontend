@@ -1,61 +1,74 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
-import MapView from './routes/MapView/MapView'
-import FriendsView from './routes/FriendsView/FriendsView'
-import MessagesView from './routes/MessagesView/MessagesView'
-import ProfileView from './routes/ProfileView/ProfileView';
-import SettingsView from './routes/SettingsView/SettingsView';
-import WelcomeView from './routes/WelcomeView/WelcomeView';
+import MapView from "./routes/MapView/MapView";
+import FriendsView from "./routes/FriendsView/FriendsView";
+import MessagesView from "./routes/MessagesView/MessagesView";
+import ProfileView from "./routes/ProfileView/ProfileView";
+import SettingsView from "./routes/SettingsView/SettingsView";
+import WelcomeView from "./routes/WelcomeView/WelcomeView";
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { auth } from './firebase/Firebase'
-import { loginUser } from './actions/UserActions'
-
+import { auth } from "./firebase/Firebase";
+import { loginUser } from "./actions/LoginActions";
+import LoginStore from "./stores/LoginStore";
 
 class App extends Component {
   constructor() {
     super();
 
-    this.state = {
-      loggedIn: false
-    }
-
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        loginUser(user.uid, user.displayName, user.photoURL);
-        this.setState({ loggedIn: true });
-      }
-      else {
-        this.setState({ loggedIn: false })
+    auth.onAuthStateChanged(user => {
+      if (user && user.uid !== undefined) {
+        loginUser(user);
       }
     });
+  }
+
+  state = {
+    loggedIn: false
+  };
+
+  componentDidMount() {
+    LoginStore.on("login", this.handleLogin);
+    LoginStore.on("logout", this.handleLogout);
+  }
+
+  handleLogin = () => {
+    this.setState({ loggedIn: true });
+  };
+
+  handleLogout = () => {
+    this.setState({ loggedIn: false });
+  };
+
+  componentWillUnmount() {
+    LoginStore.removeListener("login", this.handleLogin);
+    LoginStore.removeListener("logout", this.handleLogout);
   }
 
   render() {
     return (
       <BrowserRouter>
-        {
-          this.state.loggedIn ?
-            <React.Fragment>
-              <Switch>
-                <Route path="/" exact component={MapView}></Route>
-                <Route path="/friends" exact component={FriendsView}></Route>
-                <Route path="/messages" exact component={MessagesView}></Route>
-                <Route path="/profile" exact component={ProfileView}></Route>
-                <Route path="/profile/:id" exact component={ProfileView}></Route>
-                <Route path="/settings" exact component={SettingsView}></Route>
-              </Switch>
-            </React.Fragment>
-            :
-            <React.Fragment>
-              <Switch>
-                <Route path="/" exact component={WelcomeView}></Route>
-                <Route path="/welcome" exact component={WelcomeView}></Route>
-              </Switch>
-            </React.Fragment>
-        }
+        {!this.state.loggedIn ? (
+          <React.Fragment>
+            <Switch>
+              <Route path="/" exact component={WelcomeView} />
+              <Route path="/welcome" exact component={WelcomeView} />
+            </Switch>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Switch>
+              <Route path="/" exact component={MapView} />
+              <Route path="/friends" exact component={FriendsView} />
+              <Route path="/messages" exact component={MessagesView} />
+              <Route path="/profile" exact component={ProfileView} />
+              <Route path="/profile/:id" exact component={ProfileView} />
+              <Route path="/settings" exact component={SettingsView} />
+            </Switch>
+          </React.Fragment>
+        )}
       </BrowserRouter>
     );
   }
