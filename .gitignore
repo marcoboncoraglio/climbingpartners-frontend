@@ -8,8 +8,10 @@
 # testing
 /coverage
 
-#config
+#firebase
+/firebase-debug.log
 /src/firebase/config.js
+*.cache
 
 # production
 /build
