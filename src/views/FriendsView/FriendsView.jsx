@@ -4,6 +4,7 @@ import './FriendsView.css';
 import AppNavbar from '../../components/AppNavbar/AppNavbar'
 import AppProfileCard from '../../components/AppProfileCard/AppProfileCard'
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 const user1 = {
   name: "Jim Carrey",
@@ -25,11 +26,24 @@ class FriendsView extends Component {
       <React.Fragment>
         <AppNavbar title="Friends"></AppNavbar>
         <div className="outer_wrapper">
+          <Typography variant="h5">Somebody has added you!</Typography>
           <Grid container spacing={24}>
             {
               this.state.friendsArr.map((user, index) => {
                 return (
-                  <Grid item key={index} xs={12} lg={4}>
+                  <Grid item key={index} xs={6} lg={3}>
+                    <AppProfileCard name={user.name} url={user.imgUrl} friendRequest></AppProfileCard>
+                  </Grid>
+                )
+              })
+            }
+          </Grid>
+          <Typography variant="h5" style={{marginTop: 30}}>Your Friends</Typography>
+          <Grid container spacing={24}>
+            {
+              this.state.friendsArr.map((user, index) => {
+                return (
+                  <Grid item key={index} xs={6} lg={4}>
                     <AppProfileCard name={user.name} url={user.imgUrl}></AppProfileCard>
                   </Grid>
                 )

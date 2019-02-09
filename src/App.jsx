@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import MapView from "./routes/MapView/MapView";
-import FriendsView from "./routes/FriendsView/FriendsView";
-import MessagesView from "./routes/MessagesView/MessagesView";
-import ProfileView from "./routes/ProfileView/ProfileView";
-import SettingsView from "./routes/SettingsView/SettingsView";
-import WelcomeView from "./routes/WelcomeView/WelcomeView";
+import MapView from "./views/MapView/MapView";
+import FriendsView from "./views/FriendsView/FriendsView";
+import MessagesView from "./views/MessagesView/MessagesView";
+import ProfileView from "./views/ProfileView/ProfileView";
+import SettingsView from "./views/SettingsView/SettingsView";
+import WelcomeView from "./views/WelcomeView/WelcomeView";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 

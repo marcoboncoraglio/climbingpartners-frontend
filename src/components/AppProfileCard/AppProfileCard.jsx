@@ -62,6 +62,7 @@ class AppProfileCard extends Component {
     })
   }
 
+  //TODO: Replace this with Message and Add friend icon
   render() {
     const defaultImageUrl = "https://images.pexels.com/photos/209209/pexels-photo-209209.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
     return (
@@ -78,7 +79,7 @@ class AppProfileCard extends Component {
           <Typography style={{ textAlign: "center" }} variant="h4">{this.state.card.name}</Typography>
           {
             this.props.uid &&
-            <CardActions style={{padding: 20}}>
+            <CardActions style={{ padding: 20 }}>
               <Button fullWidth component="span" color="primary">
                 Message
               </Button>
@@ -87,7 +88,6 @@ class AppProfileCard extends Component {
               </Button>
             </CardActions>
           }
-
         </CardContent>
       </Card>
     )
