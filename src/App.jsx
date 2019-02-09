@@ -43,8 +43,7 @@ class App extends Component {
   };
 
   componentWillUnmount() {
-    LoginStore.removeListener("login", this.handleLogin);
-    LoginStore.removeListener("logout", this.handleLogout);
+    LoginStore.removeAllListeners();
   }
 
   render() {

@@ -6,45 +6,72 @@ import AppProfileCard from '../../components/AppProfileCard/AppProfileCard'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-const user1 = {
-  name: "Jim Carrey",
-  imgUrl: "https://images.pexels.com/photos/303040/pexels-photo-303040.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-}
-
-const user2 = {
-  name: "Terry Crews",
-  imgUrl: "https://images.pexels.com/photos/461593/pexels-photo-461593.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-}
+import FriendStore from '../../stores/FriendStore';
+import UserStore from '../../stores/UserStore';
 
 class FriendsView extends Component {
   state = {
-    friendsArr: [user1, user2]
+    friendList: [],
+
+    //incoming friend requests
+    friendRequests: []
   }
+
+  componentDidMount() {
+    FriendStore.on('friendUpdate', this.updateFriendRequests)
+    this.updateFriendRequests();
+  }
+
+  componentWillMount() {
+    FriendStore.removeAllListeners();
+  }
+
+  updateFriendRequests = () => {
+    this.setState({
+      friendList: FriendStore.getFriendList(),
+      friendRequests: FriendStore.getFriendRequests()
+    })
+  }
+
 
   render() {
     return (
       <React.Fragment>
         <AppNavbar title="Friends"></AppNavbar>
         <div className="outer_wrapper">
-          <Typography variant="h5">Somebody has added you!</Typography>
+          {
+            this.state.friendRequests.length !==0 &&
+            <Typography variant="h4">Someone has added you!</Typography> &&
+            <Grid container spacing={24}>
+              {
+                this.state.friendRequests.map((uid) => {
+                  var user = {
+                    uid: uid,
+                    card: UserStore.getCard(uid)
+                  }
+
+                  return (
+                    <Grid item key={user.uid} xs={6} lg={3}>
+                      <AppProfileCard name={user.card.name} url={user.card.imgUrl} friendRequest></AppProfileCard>
+                    </Grid>
+                  )
+                })
+              }
+            </Grid>
+          }
+          <Typography variant="h4" style={{ marginTop: 30 }}>Your Friends</Typography>
           <Grid container spacing={24}>
             {
-              this.state.friendsArr.map((user, index) => {
+              this.state.friendList.map((uid) => {
+
+                var user = {
+                  uid: uid,
+                  card: UserStore.getCard(uid)
+                }
+
                 return (
-                  <Grid item key={index} xs={6} lg={3}>
-                    <AppProfileCard name={user.name} url={user.imgUrl} friendRequest></AppProfileCard>
-                  </Grid>
-                )
-              })
-            }
-          </Grid>
-          <Typography variant="h5" style={{marginTop: 30}}>Your Friends</Typography>
-          <Grid container spacing={24}>
-            {
-              this.state.friendsArr.map((user, index) => {
-                return (
-                  <Grid item key={index} xs={6} lg={4}>
-                    <AppProfileCard name={user.name} url={user.imgUrl}></AppProfileCard>
+                  <Grid item key={user.uid} xs={6} lg={4}>
+                    <AppProfileCard name={user.card.name} url={user.card.imgUrl}></AppProfileCard>
                   </Grid>
                 )
               })

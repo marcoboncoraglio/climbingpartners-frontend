@@ -30,7 +30,7 @@ class AppEditProfileDetails extends Component {
   }
 
   componentWillUnmount() {
-    UserStore.removeListener("change_details", this.getUserDetails);
+    UserStore.removeAllListeners();
   }
 
   getUserDetails = () => {

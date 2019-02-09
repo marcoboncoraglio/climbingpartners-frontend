@@ -52,7 +52,7 @@ class AppProfileCard extends Component {
 
   componentWillUnmount() {
     if (!this.props.uid) {
-      UserStore.removeListener("change_card", this.getUserCard);
+      UserStore.removeAllListeners();
     }
   }
 
@@ -67,14 +67,14 @@ class AppProfileCard extends Component {
     const defaultImageUrl = "https://images.pexels.com/photos/209209/pexels-photo-209209.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
     return (
       <Card className="wrapper">
-        {
-          this.state.card.imgUrl &&
-          <CardMedia image={this.state.card.imgUrl} className="profile-image" />
-        }
-        {
-          !this.state.card.imgUrl &&
-          <CardMedia image={defaultImageUrl} className="profile-image" />
-        }
+          {
+            this.state.card.imgUrl &&
+            <CardMedia image={this.state.card.imgUrl} className="profile-image" />
+          }
+          {
+            !this.state.card.imgUrl &&
+            <CardMedia image={defaultImageUrl} className="profile-image" />
+          }
         <CardContent className="profile-restofcard">
           <Typography style={{ textAlign: "center" }} variant="h4">{this.state.card.name}</Typography>
           {
