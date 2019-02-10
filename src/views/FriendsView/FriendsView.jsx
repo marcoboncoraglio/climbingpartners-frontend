@@ -13,13 +13,14 @@ class FriendsView extends Component {
   state = {
     friendList: [],
 
-    //incoming friend requests
     friendRequests: []
   }
 
   componentDidMount() {
-    FriendStore.on('friendUpdate', this.updateFriendRequests)
+    FriendStore.on('change_friend_requests', this.updateFriendRequests)
+    FriendStore.on('change_friend_list', this.updateFriendList)
     this.updateFriendRequests();
+    this.updateFriendList();
   }
 
   componentWillMount() {
@@ -28,8 +29,13 @@ class FriendsView extends Component {
 
   updateFriendRequests = () => {
     this.setState({
-      friendList: FriendStore.getFriendList(),
       friendRequests: FriendStore.getFriendRequests()
+    })
+  }
+
+  updateFriendList = () => {
+    this.setState({
+      friendList: FriendStore.getFriendList()
     })
   }
 
@@ -40,8 +46,8 @@ class FriendsView extends Component {
         <AppNavbar title="Friends"></AppNavbar>
         <div className="outer_wrapper">
           {
-            this.state.friendRequests.length !==0 &&
-            <Typography variant="h4">Someone has added you!</Typography> &&
+            this.state.friendRequests.length !== 0 &&
+            <Typography variant="h6">Someone has added you!</Typography> &&
             <Grid container spacing={24}>
               {
                 this.state.friendRequests.map((uid) => {
@@ -52,14 +58,13 @@ class FriendsView extends Component {
 
                   return (
                     <Grid item key={user.uid} xs={6} lg={3}>
-                      <AppProfileCard name={user.card.name} url={user.card.imgUrl} friendRequest></AppProfileCard>
+                      <AppProfileCard name={user.card.name} url={user.card.imgUrl}></AppProfileCard>
                     </Grid>
                   )
                 })
               }
             </Grid>
           }
-          <Typography variant="h4" style={{ marginTop: 30 }}>Your Friends</Typography>
           <Grid container spacing={24}>
             {
               this.state.friendList.map((uid) => {
