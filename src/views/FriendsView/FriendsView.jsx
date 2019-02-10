@@ -58,7 +58,7 @@ class FriendsView extends Component {
 
                   return (
                     <Grid item key={user.uid} xs={6} lg={3}>
-                      <AppProfileCard name={user.card.name} url={user.card.imgUrl}></AppProfileCard>
+                      <AppProfileCard uid={user.uid}></AppProfileCard>
                     </Grid>
                   )
                 })
@@ -76,7 +76,7 @@ class FriendsView extends Component {
 
                 return (
                   <Grid item key={user.uid} xs={6} lg={4}>
-                    <AppProfileCard name={user.card.name} url={user.card.imgUrl}></AppProfileCard>
+                    <AppProfileCard uid={user.uid}></AppProfileCard>
                   </Grid>
                 )
               })
