@@ -18,6 +18,8 @@ class FriendStore extends EventEmitter {
         if (snap != null && snap.val() != null) {
           this.friendList = snap.val();
           this.emit("friend_list_update");
+        } else {
+          this.saveFriendList();
         }
       });
 
@@ -26,7 +28,9 @@ class FriendStore extends EventEmitter {
       .on("value", snap => {
         if (snap != null && snap.val() != null) {
           this.friendRequests = snap.val();
-          this.emit("friend_request");
+          this.emit("change_friend_requests");
+        } else {
+          this.saveFriendRequests();
         }
       });
   }
@@ -34,8 +38,26 @@ class FriendStore extends EventEmitter {
   addFriend(uid: string) {
     if (!this.friendList.includes(uid)) {
       this.friendList.push(uid);
+      this.sendFriendRequest(uid);
       this.saveFriendList();
     }
+  }
+
+  sendFriendRequest(uid: string) {
+    let theirFriendRequests: Array<string> = [];
+    db.ref()
+      .child("friendRequests/" + uid)
+      .on("value", snap => {
+        if (snap != null && snap.val() != null) {
+          theirFriendRequests = snap.val();
+        }
+      });
+
+    theirFriendRequests.push(this.uid);
+
+    db.ref()
+      .child("friendRequests/" + uid)
+      .set(theirFriendRequests);
   }
 
   removeFriend(uid: string) {
@@ -55,6 +77,14 @@ class FriendStore extends EventEmitter {
       .child("friendRequests/" + this.uid)
       .set(this.friendList);
     this.emit("change_friend_requests");
+  }
+
+  isFriend(uid: string): boolean {
+    return this.friendList.includes(uid);
+  }
+
+  hasRequestedFriendship(uid: string): boolean {
+    return this.friendRequests.includes(uid);
   }
 
   getFriendRequests(): Array<string> {
