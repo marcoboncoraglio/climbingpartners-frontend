@@ -23,7 +23,6 @@ class UserStore extends EventEmitter {
     return this.uid;
   }
 
-  //check return if snap == null
   getDetails(uid: string) {
     if (!uid) {
       return new Promise(res => {
@@ -40,8 +39,7 @@ class UserStore extends EventEmitter {
     }
   }
 
-  //check return if snap == null
-  getCard(uid: string) {
+   getCard(uid: string) {
     if (!uid) {
       return this.card;
     } else {
@@ -49,7 +47,9 @@ class UserStore extends EventEmitter {
         db.ref()
           .child("cards/" + uid)
           .on("value", snap => {
-            if (snap != null) res(snap.val());
+            if (snap != null && snap.val() != null) {
+              res(snap.val());
+            }
           });
       });
     }
@@ -101,7 +101,7 @@ class UserStore extends EventEmitter {
     this.emit("change_card");
   }
 
-  //TODO: get imgUrl
+  //TODO: get and use imgUrl
   onLogin(userObj: any) {
     this.uid = userObj.uid;
 
