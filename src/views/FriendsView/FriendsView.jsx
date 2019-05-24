@@ -17,8 +17,8 @@ class FriendsView extends Component {
   }
 
   componentDidMount() {
-    FriendStore.on('change_friend_requests', this.updateFriendRequests)
-    FriendStore.on('change_friend_list', this.updateFriendList)
+    FriendStore.on('change_friend_requests', this.updateFriendRequests);
+    FriendStore.on('change_friend_list', this.updateFriendList);
     this.updateFriendRequests();
     this.updateFriendList();
   }
@@ -75,7 +75,7 @@ class FriendsView extends Component {
                 }
 
                 return (
-                  <Grid item key={user.uid} xs={6} lg={4}>
+                  <Grid item key={user.uid} xs={6} lg={3}>
                     <AppProfileCard name={user.card.name} url={user.card.imgUrl}></AppProfileCard>
                   </Grid>
                 )
