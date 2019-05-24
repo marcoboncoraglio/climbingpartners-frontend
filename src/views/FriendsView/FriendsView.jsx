@@ -17,13 +17,8 @@ class FriendsView extends Component {
   };
 
   componentDidMount() {
-<<<<<<< HEAD
-    FriendStore.on('change_friend_requests', this.updateFriendRequests);
-    FriendStore.on('change_friend_list', this.updateFriendList);
-=======
     FriendStore.on("change_friend_requests", this.updateFriendRequests);
     FriendStore.on("change_friend_list", this.updateFriendList);
->>>>>>> 18fc9aef9337fdb032b3afdba566a925b17a8685
     this.updateFriendRequests();
     this.updateFriendList();
   }
@@ -77,22 +72,12 @@ class FriendsView extends Component {
                 card: UserStore.getCard(uid)
               };
 
-<<<<<<< HEAD
-                return (
-                  <Grid item key={user.uid} xs={6} lg={3}>
-                    <AppProfileCard name={user.card.name} url={user.card.imgUrl}></AppProfileCard>
-                  </Grid>
-                )
-              })
-            }
-=======
               return (
                 <Grid item key={user.uid} xs={12} lg={4}>
                   <AppViewProfileCard uid={user.uid} />
                 </Grid>
               );
             })}
->>>>>>> 18fc9aef9337fdb032b3afdba566a925b17a8685
           </Grid>
         </div>
       </React.Fragment>
