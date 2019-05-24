@@ -44,9 +44,10 @@ class FriendsView extends Component {
       <React.Fragment>
         <AppNavbar title="Friends" />
         <div className="outer_wrapper">
-          {this.state.friendRequests.length !== 0 && (
+          {this.state.friendRequests.length !== 0 
+              && 
               <Typography variant="h6">Someone has added you!</Typography>
-            ) && (
+              &&
               <Grid container spacing={24}>
                 {this.state.friendRequests.map(uid => {
                   var user = {
@@ -61,7 +62,7 @@ class FriendsView extends Component {
                   );
                 })}
               </Grid>
-            )}
+          }
           <Typography variant="h6" style={{ marginTop: 25 }}>
             Your Friends
           </Typography>
@@ -73,7 +74,7 @@ class FriendsView extends Component {
               };
 
               return (
-                <Grid item key={user.uid} xs={12} lg={4}>
+                <Grid item key={user.uid} xs={12} lg={3}>
                   <AppViewProfileCard uid={user.uid} />
                 </Grid>
               );

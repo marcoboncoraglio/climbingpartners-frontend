@@ -29,4 +29,7 @@ Application to find climbing partners around you
 - When viewing other profile, click menu, then profile. Details change but name/image does not
 - Limit zooming out in map
 - own profile page scrolls, other profile pages do not cause of buttons
+- friends "Keys should be unique"
+- refactor really ugly AppViewProfileCard code :(
+- Someone has added you! does not show up in FriendsView 
 
