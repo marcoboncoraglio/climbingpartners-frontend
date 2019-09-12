@@ -8,7 +8,7 @@ import 'typeface-roboto';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { AppTheme } from './theme'
 
-import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
 const Index = () => {
@@ -21,7 +21,8 @@ const Index = () => {
     );
 }
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+//ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.createRoot(document.getElementById('root')).render(<Index />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

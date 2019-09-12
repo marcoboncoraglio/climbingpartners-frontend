@@ -7,7 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import ChipInput from 'material-ui-chip-input';
-import { DatePicker } from 'material-ui-pickers';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 
 import UserStore from '../../stores/UserStore';
 import { editUserDetails } from '../../actions/UserActions';
@@ -116,15 +116,14 @@ class AppEditProfileDetails extends Component {
           </ListItem>
           <ListItem>
             {
-              <DatePicker fullWidth
-                keyboard
+              <KeyboardDatePicker fullWidth
                 label="Birthday"
                 value={this.state.details.birthday}
                 format="dd/MM/yyyy"
                 InputLabelProps={{
                   shrink: true,
                 }}
-                onChange={this.handleSaveBirthday} />
+                onAccept={this.handleSaveBirthday} />
             }
           </ListItem>
           <ListItem>
