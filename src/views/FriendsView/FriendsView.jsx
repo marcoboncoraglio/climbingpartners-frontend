@@ -17,13 +17,13 @@ class FriendsView extends Component {
   };
 
   componentDidMount() {
-    FriendStore.on("change_friend_requests", this.updateFriendRequests);
-    FriendStore.on("change_friend_list", this.updateFriendList);
     this.updateFriendRequests();
     this.updateFriendList();
+    FriendStore.on("change_friend_requests", this.updateFriendRequests);
+    FriendStore.on("change_friend_list", this.updateFriendList);
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
     FriendStore.removeAllListeners();
   }
 
@@ -40,14 +40,16 @@ class FriendsView extends Component {
   };
 
   render() {
+    console.log("List: " + this.state.friendList);
+    console.log("Requests: " + this.state.friendRequests);
     return (
       <React.Fragment>
         <AppNavbar title="Friends" />
         <div className="outer_wrapper">
           {
             this.state.friendRequests.length !== 0 &&
-              <Typography variant="h6">Someone has added you!</Typography> 
-              &&
+            <React.Fragment>
+              <Typography variant="h5">Someone has added you!</Typography>
               <Grid container spacing={24}>
                 {this.state.friendRequests.map(uid => {
                   var user = {
@@ -62,24 +64,30 @@ class FriendsView extends Component {
                   );
                 })}
               </Grid>
+            </React.Fragment>
           }
-          <Typography variant="h6" style={{ marginTop: 25 }}>
-            Your Friends
-          </Typography>
-          <Grid container spacing={24}>
-            {this.state.friendList.map(uid => {
-              var user = {
-                uid: uid,
-                card: UserStore.getCard(uid)
-              };
+          {
+            this.state.friendList.length !== 0 &&
+            <React.Fragment>
+              <Typography variant="h5" style={{ marginTop: 25 }}>Your Friends</Typography>
+              <Grid container spacing={24}>
+                {
+                  this.state.friendList.map(uid => {
+                    var user = {
+                      uid: uid,
+                      card: UserStore.getCard(uid)
+                    };
 
-              return (
-                <Grid item key={user.uid} xs={12} lg={3}>
-                  <AppViewProfileCard uid={user.uid} />
-                </Grid>
-              );
-            })}
-          </Grid>
+                    return (
+                      <Grid item key={user.uid} xs={12} lg={3}>
+                        <AppViewProfileCard uid={user.uid} />
+                      </Grid>
+                    );
+                  })
+                }
+              </Grid>
+            </React.Fragment>
+          }
         </div>
       </React.Fragment>
     );

@@ -23,7 +23,7 @@ class AppNavbar extends Component {
   render() {
     return (
       <React.Fragment>
-        <AppBar position="relative">
+        <AppBar position="sticky">
           <Toolbar>
             <IconButton color="inherit" onClick={this.toggleDrawer(true)}>
               <MenuIcon />

@@ -38,12 +38,14 @@ Application to find climbing partners around you
 ### Posts
 - allow users to create posts on the map (visibility in settings) that represent climbing trips where people can join
 
+### Unit tests
+- write unit tests :)
+
 ### Bugs
 - Limit zooming out in map
 - friends "Keys should be unique"
 - refactor really ugly AppViewProfileCard code :(
 - Someone has added you! does not show up in FriendsView 
 - Update and migrate dependencies
-- Make navbar not react to scroll -> hinder it from dissapearing from the screen
 - FriendsView, no element under "Your Friends", element over is. Navite to element over it and go back. Element under "Your Friend" appears
 
