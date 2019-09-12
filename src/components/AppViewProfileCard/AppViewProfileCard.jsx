@@ -12,6 +12,8 @@ import FriendStore from "../../stores/FriendStore";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 
+import { Link } from "react-router-dom";
+
 //TODO: refactor kinda ugly code
 class AppViewProfileCard extends Component {
   state = {
@@ -28,15 +30,20 @@ class AppViewProfileCard extends Component {
 
   //TODO: Replace this with Message and Add friend icon
   render() {
-    const defaultImageUrl =
-      "https://images.pexels.com/photos/209209/pexels-photo-209209.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
     return (
       <Card className="wrapper">
-        {this.state.card.imgUrl ? (
-          <CardMedia image={this.state.card.imgUrl} className="profile-image" />
-        ) : (
-          <CardMedia image={defaultImageUrl} className="profile-image" />
-        )}
+        {
+          this.state.card.imgUrl && (
+            window.location.href.indexOf("/friends") !== -1 ?
+              (
+                <Link to={`/profile/${this.props.uid}`}>
+                  <CardMedia image={this.state.card.imgUrl} className="profile-image" />
+                </Link>
+              )
+              :
+              <CardMedia image={this.state.card.imgUrl} className="profile-image" />
+          )
+        }
         <CardContent className="profile-restofcard">
           <Typography style={{ textAlign: "center" }} variant="h4">
             {this.state.card.name}
@@ -46,7 +53,7 @@ class AppViewProfileCard extends Component {
               Message
             </Button>
             {//if profile card viewed is not your friend
-            !FriendStore.isFriend(this.props.uid) &&
+              !FriendStore.isFriend(this.props.uid) &&
               !FriendStore.hasRequestedFriendship(this.props.uid) && (
                 <Button
                   fullWidth
@@ -58,31 +65,31 @@ class AppViewProfileCard extends Component {
                 </Button>
               )}
             {//if profile card viewed is not your friend
-            //TODO: replace with acceptFriendship method
-            !FriendStore.isFriend(this.props.uid) &&
+              //TODO: replace with acceptFriendship method
+              !FriendStore.isFriend(this.props.uid) &&
               FriendStore.hasRequestedFriendship(this.props.uid) && (
                 <div>
-                <Button
-                  fullWidth
-                  component="span"
-                  color="primary"
-                  onClick={() => this.addFriend(this.props.uid)}
-                >
-                  Accept
+                  <Button
+                    fullWidth
+                    component="span"
+                    color="primary"
+                    onClick={() => this.addFriend(this.props.uid)}
+                  >
+                    Accept
                 </Button>
-                <Button
-                fullWidth
-                component="span"
-                color="primary"
-                onClick={() => this.addFriend(this.props.uid)}
-              >
-                Decline
+                  <Button
+                    fullWidth
+                    component="span"
+                    color="primary"
+                    onClick={() => this.addFriend(this.props.uid)}
+                  >
+                    Decline
               </Button>
-              </div>
+                </div>
               )}
           </CardActions>
         </CardContent>
-      </Card>
+      </Card >
     );
   }
 }

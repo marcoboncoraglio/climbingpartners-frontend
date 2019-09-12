@@ -44,4 +44,6 @@ Application to find climbing partners around you
 - refactor really ugly AppViewProfileCard code :(
 - Someone has added you! does not show up in FriendsView 
 - Update and migrate dependencies
+- Make navbar not react to scroll -> hinder it from dissapearing from the screen
+- FriendsView, no element under "Your Friends", element over is. Navite to element over it and go back. Element under "Your Friend" appears
 

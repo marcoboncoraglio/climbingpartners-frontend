@@ -44,9 +44,9 @@ class FriendsView extends Component {
       <React.Fragment>
         <AppNavbar title="Friends" />
         <div className="outer_wrapper">
-          {this.state.friendRequests.length !== 0 
-              && 
-              <Typography variant="h6">Someone has added you!</Typography>
+          {
+            this.state.friendRequests.length !== 0 &&
+              <Typography variant="h6">Someone has added you!</Typography> 
               &&
               <Grid container spacing={24}>
                 {this.state.friendRequests.map(uid => {
