@@ -47,7 +47,7 @@ class AppViewProfileCard extends Component {
             </Button>
             {//if profile card viewed is not your friend
             !FriendStore.isFriend(this.props.uid) &&
-              !FriendStore.hasRequestedFriendship(this.props.uid)(
+              !FriendStore.hasRequestedFriendship(this.props.uid) && (
                 <Button
                   fullWidth
                   component="span"
@@ -60,7 +60,7 @@ class AppViewProfileCard extends Component {
             {//if profile card viewed is not your friend
             //TODO: replace with acceptFriendship method
             !FriendStore.isFriend(this.props.uid) &&
-              FriendStore.hasRequestedFriendship(this.props.uid)(
+              FriendStore.hasRequestedFriendship(this.props.uid) && (
                 <div>
                 <Button
                   fullWidth
