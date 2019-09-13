@@ -123,7 +123,7 @@ class AppEditProfileDetails extends Component {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                onAccept={this.handleSaveBirthday} />
+                onChange={this.handleSaveBirthday} />
             }
           </ListItem>
           <ListItem>
