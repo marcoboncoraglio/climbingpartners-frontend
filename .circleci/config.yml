@@ -34,4 +34,5 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: npm run test
+      # For some reason this requires the .config file in gitignore
+      #- run: npm run test
