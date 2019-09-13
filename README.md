@@ -42,8 +42,6 @@ Application to find climbing partners around you
 - write unit tests :)
 
 ### Bugs
-- Limit zooming out in map
-- friends "Keys should be unique"
 - refactor really ugly AppViewProfileCard code :(
 - FriendsView, one element over "Your Friends", no element under "Your Friends". Navigate to element over "Your Friends" and go back. Element under "Your Friend" appears ( Adding suspense will probably take care of this bug )
 
