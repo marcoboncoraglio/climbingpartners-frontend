@@ -40,8 +40,6 @@ class FriendsView extends Component {
   };
 
   render() {
-    console.log("List: " + this.state.friendList);
-    console.log("Requests: " + this.state.friendRequests);
     return (
       <React.Fragment>
         <AppNavbar title="Friends" />

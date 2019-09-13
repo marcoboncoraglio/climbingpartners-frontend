@@ -13,7 +13,7 @@ const ProfileView = props => {
     <div className="outer">
       <AppNavbar title="Profile" />
       <div className="inner_wrapper">
-        <Grid container className="inner_remaining" spacing={16}>
+        <Grid container className="inner_remaining" spacing={1}>
           <Grid item xs={12} md>
             {props.match.params.id ? (
               <AppViewProfileCard uid={props.match.params.id} />

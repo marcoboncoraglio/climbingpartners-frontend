@@ -21,8 +21,8 @@ const Index = () => {
     );
 }
 
-//ReactDOM.render(<Index />, document.getElementById('root'));
-ReactDOM.createRoot(document.getElementById('root')).render(<Index />);
+ReactDOM.render(<Index />, document.getElementById('root'));
+//ReactDOM.createRoot(document.getElementById('root')).render(<Index />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

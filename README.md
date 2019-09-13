@@ -19,7 +19,7 @@ Application to find climbing partners around you
 - implement settings backend (without checking for radius yet)
 
 ### Friends
-- improve friends logic, add pending state
+- add friendship pending state as separate database
 
 ### Settings
 - implement privacy store that handles visibility

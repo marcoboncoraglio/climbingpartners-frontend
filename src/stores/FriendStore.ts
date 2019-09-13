@@ -61,7 +61,7 @@ class FriendStore extends EventEmitter {
   }
 
   removeFriend(uid: string) {
-    this.friendList = this.friendList.filter(elem => elem == uid);
+    this.friendList = this.friendList.filter(elem => elem === uid);
     this.saveFriendList();
   }
 

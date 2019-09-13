@@ -38,6 +38,7 @@ class LoginStore extends EventEmitter {
             }
             case "LOGOUT":{
                 this.logout();
+                break;
             }
             default: {
                 return;
