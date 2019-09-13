@@ -79,8 +79,8 @@ class AppMap extends Component {
     
     
     const bounds = [
-      [-180, -180],
-      [180, 180]
+      [-90, -180],
+      [90, 180]
     ];
     
     return (
@@ -88,6 +88,7 @@ class AppMap extends Component {
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          bounds={bounds}
           noWrap
         />
         {
