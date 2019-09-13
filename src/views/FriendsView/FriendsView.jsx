@@ -47,8 +47,8 @@ class FriendsView extends Component {
           {
             this.state.friendRequests.length !== 0 &&
             <React.Fragment>
-              <Typography variant="h5">Someone has added you!</Typography>
-              <Grid container spacing={24}>
+              <Typography variant="h5" style={{marginLeft: 5}}>Someone has added you!</Typography>
+              <Grid container spacing={5}>
                 {this.state.friendRequests.map(uid => {
                   var user = {
                     uid: uid,
@@ -67,8 +67,8 @@ class FriendsView extends Component {
           {
             this.state.friendList.length !== 0 &&
             <React.Fragment>
-              <Typography variant="h5" style={{ marginTop: 25 }}>Your Friends</Typography>
-              <Grid container spacing={24}>
+              <Typography variant="h5" style={{ marginTop: 25, marginLeft: 5 }}>Your Friends</Typography>
+              <Grid container spacing={5}>
                 {
                   this.state.friendList.map(uid => {
                     var user = {

@@ -12,9 +12,17 @@ import LocationStore from '../../stores/LocationStore';
 
 class AppMap extends Component {
 
-  constructor(props) {
-    super(props);
+  state = {
+    location: {
+      lat: 0,
+      lng: 0
+    },
+    zoom: 2,
+    hasUserLocation: false,
+    userLocations: []
+  }
 
+  getLocationFromGPS = () => {
     LocationStore.getLocation()
       .then(location => {
         this.setState({
@@ -27,32 +35,24 @@ class AppMap extends Component {
       });
   }
 
-  state = {
-    location: {
-      lat: 0,
-      lng: 0
-    },
-    zoom: 2,
-    hasUserLocation: false,
-    userLocations: []
-  }
-
-  componentDidMount() {
-    localStorage.getItem('location') &&
-      this.setState(prevState => ({
-        ...prevState,
-        location: JSON.parse(localStorage.getItem('location')),
-        zoom: 12
-      }));
-
-    //gets called every time a user updates, we have to iterate over every user
-    //no problem if only close users are returned in the snapshot
+  //gets called every time a user updates, we have to iterate over every user
+  //no problem if only close users are returned in the snapshot
+  getUserLocations = () => {
     db.ref().child("locations").on('value', snap => {
       this.setState(prevState => ({
         ...prevState,
         userLocations: this.snapshotToArray(snap)
       }));
     });
+  }
+
+  putLocationInMap = () => {
+    localStorage.getItem('location') &&
+    this.setState(prevState => ({
+      ...prevState,
+      location: JSON.parse(localStorage.getItem('location')),
+      zoom: 12
+    }));
   }
 
   snapshotToArray = (snapshot) => {
@@ -67,6 +67,12 @@ class AppMap extends Component {
 
     return returnArr;
   };
+
+  componentDidMount() {
+    this.getLocationFromGPS();
+    this.getUserLocations();
+    this.putLocationInMap();
+  }
 
   render() {
     const position = [this.state.location.lat, this.state.location.lng]
