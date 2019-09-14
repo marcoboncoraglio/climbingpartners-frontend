@@ -35,14 +35,6 @@ class FriendStore extends EventEmitter {
       });
   }
 
-  addFriend(uid: string) {
-    if (!this.friendList.includes(uid)) {
-      this.friendList.push(uid);
-      this.sendFriendRequest(uid);
-      this.saveFriendList();
-    }
-  }
-
   sendFriendRequest(uid: string) {
     let theirFriendRequests: Array<string> = [];
     db.ref()
@@ -53,15 +45,46 @@ class FriendStore extends EventEmitter {
         }
       });
 
-    theirFriendRequests.push(this.uid);
+    if (!theirFriendRequests.includes(this.uid)) {
+      theirFriendRequests.push(this.uid);
+
+      db.ref()
+        .child("friendRequests/" + uid)
+        .set(theirFriendRequests);
+    }
+  }
+
+  acceptFriendRequest(uid: string) {
+    let theirFriendList: Array<string> = [];
 
     db.ref()
-      .child("friendRequests/" + uid)
-      .set(theirFriendRequests);
+      .child("friendList/" + uid)
+      .on("value", snap => {
+        if (snap != null && snap.val() != null) {
+          theirFriendList = snap.val();
+        }
+      });
+
+    theirFriendList.push(this.uid);
+
+    db.ref()
+      .child("friendList/" + uid)
+      .set(theirFriendList);
+
+    this.friendList.push(uid);
+    this.saveFriendList();
+
+    this.friendRequests = this.friendRequests.filter(elem => elem !== uid);
+    this.saveFriendRequests();
+  }
+
+  declineFriendRequest(uid: string) {
+    this.friendRequests = this.friendRequests.filter(elem => elem !== uid);
+    this.saveFriendRequests();
   }
 
   removeFriend(uid: string) {
-    this.friendList = this.friendList.filter(elem => elem === uid);
+    this.friendList = this.friendList.filter(elem => elem !== uid);
     this.saveFriendList();
   }
 
@@ -97,8 +120,16 @@ class FriendStore extends EventEmitter {
 
   handleActions = (action: any) => {
     switch (action.type) {
-      case "ADD_FRIEND": {
-        this.addFriend(action.uid);
+      case "SEND_FRIEND_REQUEST": {
+        this.sendFriendRequest(action.uid);
+        break;
+      }
+      case "ACCEPT_FRIEND_REQUEST": {
+        this.acceptFriendRequest(action.uid);
+        break;
+      }
+      case "DECLINE_FRIEND_REQUEST": {
+        this.declineFriendRequest(action.uid);
         break;
       }
       case "REMOVE_FRIEND": {

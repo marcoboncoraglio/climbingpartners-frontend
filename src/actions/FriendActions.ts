@@ -1,8 +1,22 @@
 import dispatcher from '../dispatcher';
 
-export function addFriend(uid: string){
+export function sendFriendRequest(uid: string){
     dispatcher.dispatch({
-        type: "ADD_FRIEND",
+        type: "SEND_FRIEND_REQUEST",
+        uid: uid
+    })
+}
+
+export function acceptFriendRequest(uid: string){
+    dispatcher.dispatch({
+        type: "ACCEPT_FRIEND_REQUEST",
+        uid: uid
+    })
+}
+
+export function declineFriendRequest(uid: string){
+    dispatcher.dispatch({
+        type: "DECLINE_FRIEND_REQUEST",
         uid: uid
     })
 }

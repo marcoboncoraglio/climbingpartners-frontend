@@ -52,20 +52,19 @@ class AppViewProfileCard extends Component {
             <Button fullWidth component="span" color="primary">
               Message
             </Button>
-            {//if profile card viewed is not your friend
+            {
               !FriendStore.isFriend(this.props.uid) &&
-              !FriendStore.hasRequestedFriendship(this.props.uid) && (
+              /*!FriendStore.hasRequestedFriendship(this.props.uid) && */ (
                 <Button
                   fullWidth
                   component="span"
                   color="primary"
-                  onClick={() => FriendStore.addFriend(this.props.uid)}
+                  onClick={() => FriendStore.sendFriendRequest(this.props.uid)}
                 >
                   Add friend
                 </Button>
               )}
-            {//if profile card viewed is not your friend
-              //TODO: replace with acceptFriendship method
+            {
               !FriendStore.isFriend(this.props.uid) &&
               FriendStore.hasRequestedFriendship(this.props.uid) && (
                 <div>
@@ -73,7 +72,7 @@ class AppViewProfileCard extends Component {
                     fullWidth
                     component="span"
                     color="primary"
-                    onClick={() => this.addFriend(this.props.uid)}
+                    onClick={() => FriendStore.acceptFriendRequest(this.props.uid)}
                   >
                     Accept
                 </Button>
@@ -81,7 +80,7 @@ class AppViewProfileCard extends Component {
                     fullWidth
                     component="span"
                     color="primary"
-                    onClick={() => this.addFriend(this.props.uid)}
+                    onClick={() => FriendStore.declineFriendRequest(this.props.uid)}
                   >
                     Decline
               </Button>
