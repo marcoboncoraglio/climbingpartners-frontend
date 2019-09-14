@@ -3,6 +3,15 @@ Application to find climbing partners around you
 
 # TODO
 
+### General
+- refactor out database logic from stores to services to which stores hold a reference to
+- refactor AppViewProfileCard 
+- migrate to react suspense
+    - https://www.youtube.com/watch?v=SCQgE4mTnjU&list=LLE6fjBTUKY1ovpgW8szLOcQ&index=7&t=0s
+
+- migrate to react hooks
+    - search for every direct call to setState try to replace with useState hook
+
 ### icons
 - icon for brand
 
@@ -15,8 +24,9 @@ Application to find climbing partners around you
 - add groups and group chat
 
 ### Users
-- add img for usr and crop somehow?
-- implement settings backend (without checking for radius yet)
+- add img for usr and crop
+    - add img: https://www.youtube.com/watch?v=XeiOnkEI7XI&list=LLE6fjBTUKY1ovpgW8szLOcQ&index=3&t=404s 
+    - crop: https://github.com/DominicTobias/react-image-crop crop
 
 ### Friends
 - add friendship pending state as separate database
@@ -42,6 +52,5 @@ Application to find climbing partners around you
 - write unit tests :)
 
 ### Bugs
-- refactor really ugly AppViewProfileCard code :(
-- FriendsView, one element over "Your Friends", no element under "Your Friends". Navigate to element over "Your Friends" and go back. Element under "Your Friend" appears ( Adding suspense will probably take care of this bug )
+- Default user img not loading, possible failing to load img from google profile
 
