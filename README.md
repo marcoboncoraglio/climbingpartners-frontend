@@ -3,6 +3,8 @@ Application to find climbing partners around you
 
 # TODO
 
+## Frontend
+
 ### General
 - refactor out database logic from stores to services to which stores hold a reference to
 - refactor AppViewProfileCard 
@@ -15,21 +17,14 @@ Application to find climbing partners around you
 ### icons
 - icon for brand
 
-### Implement backend
-- Get request for all users within a certain range
-- Eventually reimplement entire backend with node, express and mongoose
-
-### Messages
+### Messages views
 - personal messages
 - add groups and group chat
 
 ### Users
 - add img for usr and crop
     - add img: https://www.youtube.com/watch?v=XeiOnkEI7XI&list=LLE6fjBTUKY1ovpgW8szLOcQ&index=3&t=404s 
-    - crop: https://github.com/DominicTobias/react-image-crop crop
-
-### Friends
-- add friendship pending state as separate database
+    - crop: https://github.com/DominicTobias/react-image-crop 
 
 ### Settings
 - implement privacy store that handles visibility
@@ -54,3 +49,8 @@ Application to find climbing partners around you
 ### Bugs
 - Default user img not loading, possible failing to load img from google profile
 
+## Backend
+
+### Implement backend
+- Get request for all users within a certain range
+- Eventually reimplement entire backend with node, express and mongoose
