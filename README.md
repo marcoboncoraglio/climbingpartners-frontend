@@ -52,5 +52,5 @@ Application to find climbing partners around you
 ## Backend
 
 ### Implement backend
-- Get request for all users within a certain range
 - Eventually reimplement entire backend with node, express and mongoose
+- Get request for all users within a certain range
