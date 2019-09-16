@@ -14,6 +14,8 @@ Application to find climbing partners around you
 - migrate to react hooks
     - search for every direct call to setState try to replace with useState hook
 
+- migrate to dev-dependencies in frontend
+
 ### icons
 - icon for brand
 
