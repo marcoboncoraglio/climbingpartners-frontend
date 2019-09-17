@@ -5,11 +5,11 @@ const UserDetails = require('../models/userDetails')
 //TODO: do not allow in production, only for testing purposes!
 router.get('/', async (req, res) => {
   const userDetails = await UserDetails.find()
-  res.json(userDetails)
+  res.status(200).json(userDetails)
 })
 
 router.get('/:id', getUserDetails, (req, res) => {
-  res.json(res.userDetails)
+  res.status(200).json(res.userDetails)
 })
 
 router.post('/', async (req, res) => {
@@ -89,8 +89,6 @@ async function getUserDetails(req, res, next) {
   } catch (err) {
     return res.status(500).json({ message: err.message })
   }
-
-
 }
 
 module.exports = router

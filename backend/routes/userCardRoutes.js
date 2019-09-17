@@ -2,14 +2,13 @@ const express = require('express')
 const router = express.Router()
 const UserCard = require('../models/userCard')
 
-//TODO: do not allow in production, only for testing purposes!
 router.get('/', async (req, res) => {
   const userCards = await UserCard.find()
-  res.json(userCards)
+  res.status(200).json(userCards)
 })
 
 router.get('/:id', getUserCard, (req, res) => {
-  res.json(res.userCard)
+  res.status(200).json(res.userCard)
 })
 
 router.post('/', async (req, res) => {
@@ -77,8 +76,6 @@ async function getUserCard(req, res, next) {
   } catch (err) {
     return res.status(500).json({ message: err.message })
   }
-
-
 }
 
 module.exports = router
