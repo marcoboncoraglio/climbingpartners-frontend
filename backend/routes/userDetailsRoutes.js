@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const UserDetails = require('../models/userDetails')
 
-//TODO: do not allow in production, only for testing purposes!
 router.get('/', async (req, res) => {
   const userDetails = await UserDetails.find()
   res.status(200).json(userDetails)

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Location = require('../models/location')
 
+//TODO: allow getting locations withing a certain radius
 router.get('/', async (req, res) => {
   const locations = await Location.find()
   res.json(locations)
