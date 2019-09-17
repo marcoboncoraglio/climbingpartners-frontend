@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const FriendLists = require('../models/friendLists')
 
-//TODO: allow getting friends withing a certain radius
 router.get('/', async (req, res) => {
   const friendLists = await FriendLists.find()
   res.json(friendLists)
@@ -68,7 +67,7 @@ async function getFriendLists(req, res, next) {
   try {
     const friendLists = await FriendLists.findById(req.params.id)
     if (friendLists == null) {
-      return res.status(404).json({ message: 'Cant find friends lists' })
+      return res.status(404).json({ message: 'Cant find friend lists' })
     }
     
     res.friendLists = friendLists

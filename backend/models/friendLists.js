@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const friendsListsSchema = new mongoose.Schema({
+const friendListsSchema = new mongoose.Schema({
     _id: {
         type: mongoose.Types.ObjectId,
         default: new mongoose.Types.ObjectId()
@@ -15,5 +15,5 @@ const friendsListsSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('friendsLists', friendsListsSchema);
+module.exports = mongoose.model('friendLists', friendsListSchema);
 
