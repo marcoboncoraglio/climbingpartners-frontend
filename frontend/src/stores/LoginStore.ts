@@ -1,6 +1,5 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
-import { auth } from '../firebase/Firebase'
 
 class LoginStore extends EventEmitter {
     UserLoggedIn: boolean = false
@@ -13,7 +12,6 @@ class LoginStore extends EventEmitter {
     }
 
     logout(){
-        auth.signOut();
         this.UserLoggedIn = false;
         this.emit("logout");
     }

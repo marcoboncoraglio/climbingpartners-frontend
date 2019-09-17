@@ -10,20 +10,9 @@ import WelcomeView from "./views/WelcomeView/WelcomeView";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { auth } from "./firebase/Firebase";
-import { loginUser } from "./actions/LoginActions";
 import LoginStore from "./stores/LoginStore";
 
 class App extends Component {
-  constructor() {
-    super();
-
-    auth.onAuthStateChanged(user => {
-      if (user && user.uid !== undefined) {
-        loginUser(user);
-      }
-    });
-  }
 
   state = {
     loggedIn: false

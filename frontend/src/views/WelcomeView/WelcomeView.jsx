@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
+import AppLogin from '../../components/AppLogin/AppLogin'
 import './WelcomeView.css';
-
-import {auth, signInOptions } from '../../firebase/Firebase'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 
 class WelcomeView extends Component {
-  uiConfig = {
-    signInFlow: 'popup',
-    signInOptions: signInOptions,
-    signInSuccessUrl: "/"
-  };
 
   render() {
     return (
@@ -18,9 +11,7 @@ class WelcomeView extends Component {
         <div className="container">
           <h1 className="header">Climbing partners</h1>
           <p className="motto">Find climbing partners around you!</p>
-          <div className="buttons">
-            <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={auth} />
-          </div>
+          <AppLogin/>
         </div>
       </div>
     )
