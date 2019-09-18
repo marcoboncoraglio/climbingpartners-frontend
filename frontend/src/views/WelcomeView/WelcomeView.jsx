@@ -10,7 +10,7 @@ const customEmailButtonConfig = {
   text: "Login with email",
   icon: EmailTwoTone,
   iconFormat: name => `fa fa-${name}`,
-  style: { background: "#fff", color: "757575" }
+  style: { background: "#fff", color: "757575", fontSize: 15}
 };
 
 const EmailLoginButton = createButton(customEmailButtonConfig);
@@ -28,8 +28,8 @@ class WelcomeView extends Component {
             <Link to="/login" style={{ textDecoration: 'none' }}>
               <EmailLoginButton></EmailLoginButton>
             </Link>
-            <GoogleLoginButton preventActiveStyles onClick={() => alert("login!")}></GoogleLoginButton>
-            <FacebookLoginButton preventActiveStyles onClick={() => alert("login!")}></FacebookLoginButton>
+            <GoogleLoginButton preventActiveStyles style={{fontSize: 15}} onClick={() => alert("login!")}></GoogleLoginButton>
+            <FacebookLoginButton preventActiveStyles style={{fontSize: 15}} onClick={() => alert("login!")}></FacebookLoginButton>
           </Grid>
         </div>
       </div>
