@@ -7,6 +7,10 @@ import MessagesView from "./views/MessagesView/MessagesView";
 import ProfileView from "./views/ProfileView/ProfileView";
 import SettingsView from "./views/SettingsView/SettingsView";
 import WelcomeView from "./views/WelcomeView/WelcomeView";
+import LocalLoginView from "./views/LocalLoginView/LocalLoginView";
+import LocalRegisterView from "./views/LocalRegisterView/LocalRegisterView";
+
+
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -43,6 +47,8 @@ class App extends Component {
             <Switch>
               <Route path="/" exact component={WelcomeView} />
               <Route path="/welcome" exact component={WelcomeView} />
+              <Route path="/login" exact component={LocalLoginView} />
+              <Route path="/register" exact component={LocalRegisterView} />
             </Switch>
           </React.Fragment>
         ) : (
