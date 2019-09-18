@@ -1,11 +1,13 @@
 const express = require('express');
 const passport = require('passport');
 const UserLogin = require('../models/userLogin');
+
 const router = express.Router();
 
 const frontendUrl = 'http://localhost:3000';
 
 //TODO: check generation of session here and in index.html
+//TODO: return uid from which frontend's loginstore generates residual objects
 router.post('/register', (req, res, next) => {
     UserLogin.register(new UserLogin({ username: req.body.username }), req.body.password, (err, account) => {
         if (err) {
@@ -17,7 +19,7 @@ router.post('/register', (req, res, next) => {
                 if (err) {
                     return next(err);
                 }
-                res.redirect(frontendUrl);
+                res.status(200);
             });
         });
     });
@@ -29,7 +31,7 @@ router.post('/login', passport.authenticate('local', { failureFlash: true }), (r
         if (err) {
             return next(err);
         }
-        res.redirect(frontendUrl);  
+        res.status(200).json({message: "successful"});
     });
 });
 
@@ -39,7 +41,7 @@ router.get('/logout', (req, res, next) => {
         if (err) {
             return next(err);
         }
-        res.redirect(frontendUrl);
+        res.status(200);
     });
 });
 

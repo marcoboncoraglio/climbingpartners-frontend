@@ -19,7 +19,7 @@ app.use(cors({
 
 //TODO: find out more about this
 app.use(require('express-session')({
-  secret: 'keyboard cat',
+  secret: 'keyboard cat', //take out of here and put into .env
   resave: true,
   saveUninitialized: true
 }));

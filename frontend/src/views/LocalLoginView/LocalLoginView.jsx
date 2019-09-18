@@ -43,9 +43,12 @@ export default function LocalLoginView() {
 
     function handleSubmitLoginForm(event) {
         event.preventDefault();
-        axios.get('http://localhost:4000/api/userLogin')
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
+        axios.post('http://localhost:4000/api/auth/login', {
+            username: username,
+            password: password
+            })
+            .then((res) => console.log("Login successful"))
+            .catch((err) => console.log("Login failed"));
     }
 
     return (
