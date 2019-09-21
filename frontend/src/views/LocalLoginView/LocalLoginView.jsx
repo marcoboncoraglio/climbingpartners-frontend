@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Avatar, Button, CssBaseline, TextField, Link, Grid, Typography, Container } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
+import { useAlert } from 'react-alert';
+
 const axios = require('axios');
 
 const useStyles = makeStyles(theme => ({
@@ -29,6 +31,8 @@ const useStyles = makeStyles(theme => ({
 export default function LocalLoginView() {
 
     const classes = useStyles();
+    const alert = useAlert();
+
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -48,8 +52,13 @@ export default function LocalLoginView() {
             username: username,
             password: password
         })
-            .then((res) => console.log("Login successful"))
-            .catch((err) => console.log("Login failed"));
+            .then((res) => {
+                if(res.data.message){
+                    return alert.error(res.data.message);
+                }
+                console.log(res.data.user);
+            })
+            .catch((err) => console.log(err));
     }
 
     return (

@@ -58,14 +58,19 @@ export default function LocalRegisterView() {
     function handleSubmitLoginForm(event) {
         event.preventDefault();
         if(password !== confirmPassword){
-            return alert.show('Passwords do not match');
+            return alert.error('Passwords do not match!');
         }
-        axios.post('http://localhost:4000/api/auth/login', {
+        axios.post('http://localhost:4000/api/auth/register', {
             username: username,
             password: password
         })
-            .then((res) => console.log("Login successful"))
-            .catch((err) => console.log("Login failed"));
+            .then((res) => {
+                if(res.data.error){
+                    return alert.error(res.data.error);
+                }
+                console.log(res.data.user);
+            })
+            .catch((err) => console.log(err));
     }
 
     return (
