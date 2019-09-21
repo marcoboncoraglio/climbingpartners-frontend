@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +9,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useAlert } from 'react-alert';
+
+const axios = require('axios');
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -34,6 +37,36 @@ const useStyles = makeStyles(theme => ({
 
 export default function LocalRegisterView() {
     const classes = useStyles();
+    const alert = useAlert();
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    function handleChangeUsername(event) {
+        setUsername(event.target.value);
+    }
+
+    function handleChangePassword(event) {
+        setPassword(event.target.value);
+    }
+
+    function handleChangeConfirmPassword(event) {
+        setConfirmPassword(event.target.value);
+    }
+
+    function handleSubmitLoginForm(event) {
+        event.preventDefault();
+        if(password !== confirmPassword){
+            return alert.show('Passwords do not match');
+        }
+        axios.post('http://localhost:4000/api/auth/login', {
+            username: username,
+            password: password
+        })
+            .then((res) => console.log("Login successful"))
+            .catch((err) => console.log("Login failed"));
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -45,40 +78,19 @@ export default function LocalRegisterView() {
                 <Typography component="h1" variant="h5">
                     Register
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={handleSubmitLoginForm}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={12}>
                             <TextField
-                                autoComplete="fname"
-                                name="firstName"
+                                autoComplete="Username"
+                                name="Username"
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="firstName"
-                                label="First Name"
+                                label="Username"
+                                value={username}                                
                                 autoFocus
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
-                                autoComplete="lname"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                                onChange={handleChangeUsername}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -89,7 +101,21 @@ export default function LocalRegisterView() {
                                 name="password"
                                 label="Password"
                                 type="password"
-                                id="password"
+                                value={password}
+                                onChange={handleChangePassword}
+                                autoComplete="current-password"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="confirmPass"
+                                label="Confirm password"
+                                type="password"
+                                value={confirmPassword}
+                                onChange={handleChangeConfirmPassword}
                                 autoComplete="current-password"
                             />
                         </Grid>

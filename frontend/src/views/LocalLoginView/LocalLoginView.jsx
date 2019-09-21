@@ -28,10 +28,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function LocalLoginView() {
 
+    const classes = useStyles();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const classes = useStyles();
 
     function handleChangeUsername(event) {
         setUsername(event.target.value);
@@ -46,7 +47,7 @@ export default function LocalLoginView() {
         axios.post('http://localhost:4000/api/auth/login', {
             username: username,
             password: password
-            })
+        })
             .then((res) => console.log("Login successful"))
             .catch((err) => console.log("Login failed"));
     }
@@ -62,28 +63,34 @@ export default function LocalLoginView() {
                     Sign in
                 </Typography>
                 <form className={classes.form} noValidate onSubmit={handleSubmitLoginForm}>
-                    <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        value={username}
-                        onChange={handleChangeUsername}
-                    />
-                    <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                        value={password}
-                        onChange={handleChangePassword}
-                    />
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                label="Username"
+                                name="username"
+                                autoComplete="username"
+                                autoFocus
+                                value={username}
+                                onChange={handleChangeUsername}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                autoComplete="current-password"
+                                value={password}
+                                onChange={handleChangePassword}
+                            />
+                        </Grid>
+                    </Grid>
                     <Button
                         type="submit"
                         fullWidth
