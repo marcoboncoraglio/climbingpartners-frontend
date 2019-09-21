@@ -1,17 +1,14 @@
 const express = require('express');
 const passport = require('passport');
 const UserLogin = require('../models/userLogin');
-
 const router = express.Router();
-
-const frontendUrl = 'http://localhost:3000';
 
 //TODO: check generation of session here and in index.html
 //TODO: return uid from which frontend's loginstore generates residual objects
 router.post('/register', (req, res, next) => {
     UserLogin.register(new UserLogin({ username: req.body.username }), req.body.password, (err, account) => {
         if (err) {
-            return res.status(err.status || 500).json({ error: err.message });
+            return res.json({ error: err.message });
         }
 
         passport.authenticate('local')(req, res, () => {
@@ -19,20 +16,28 @@ router.post('/register', (req, res, next) => {
                 if (err) {
                     return next(err);
                 }
-                res.status(200);
+                res.json({user: account});
             });
         });
     });
 });
 
-router.post('/login', passport.authenticate('local', { failureFlash: true }), (req, res, next) => {
-
-    req.session.save((err) => {
-        if (err) {
-            return next(err);
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', (hashErr, user, info) => {
+        if (hashErr) { 
+            return res.json({ message: hashErr }); 
         }
-        res.status(200).json({message: "successful"});
-    });
+        if (!user) { 
+            return res.json({ message: info.message }); 
+        }
+
+        req.session.save((err) => {
+            if (err) {
+                return next(err);
+            }
+            res.json({ user: user });
+        });
+    })(req, res, next);
 });
 
 router.get('/logout', (req, res, next) => {
