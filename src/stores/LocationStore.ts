@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import dispatcher from '../dispatcher';
-import { ILocation } from '../interfaces/LocationInterfaces';
+import { ILocation, ILocationUser } from '../interfaces/LocationInterfaces';
 const axios = require('axios');
 
 class LocationStore extends EventEmitter {
@@ -60,6 +60,12 @@ class LocationStore extends EventEmitter {
         { enableHighAccuracy: this.highAccuracy }
       );
     });
+  }
+
+  async getLocations() {
+    axios
+      .get(`{$url}/locations/`)
+      .then((locations: Array<ILocationUser>) => ({ locations }));
   }
 
   enableGPS() {
