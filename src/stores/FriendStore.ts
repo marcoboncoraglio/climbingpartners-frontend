@@ -1,105 +1,98 @@
-import { EventEmitter } from "events";
-import dispatcher from "../dispatcher";
-import { db } from "../firebase/Firebase";
+import { EventEmitter } from 'events';
+import dispatcher from '../dispatcher';
+const axios = require('axios');
 
 class FriendStore extends EventEmitter {
-  uid: string = "0";
+  uid: string = '0';
 
   friendList: Array<string> = [];
 
   friendRequests: Array<string> = [];
 
+  url: string = process.env.BACKEND_URL_TEST || 'localhost:4000/api/';
+
   onLogin(userObject: any) {
     this.uid = userObject.uid;
 
-    db.ref()
-      .child("friendList/" + this.uid)
-      .on("value", snap => {
-        if (snap != null && snap.val() != null) {
-          this.friendList = snap.val();
-          this.emit("friend_list_update");
-        } else {
-          this.saveFriendList();
-        }
-      });
+    axios
+      .get(`${this.url}/friends`)
+      .then((friendList: Array<string>) => (this.friendList = friendList));
 
-    db.ref()
-      .child("friendRequests/" + this.uid)
-      .on("value", snap => {
-        if (snap != null && snap.val() != null) {
-          this.friendRequests = snap.val();
-          this.emit("change_friend_requests");
-        } else {
-          this.saveFriendRequests();
-        }
-      });
+    axios
+      .get(`${this.url}/requests`)
+      .then(
+        (friendRequests: Array<string>) =>
+          (this.friendRequests = friendRequests)
+      );
   }
 
   sendFriendRequest(uid: string) {
     let theirFriendRequests: Array<string> = [];
-    db.ref()
-      .child("friendRequests/" + uid)
-      .on("value", snap => {
-        if (snap != null && snap.val() != null) {
-          theirFriendRequests = snap.val();
-        }
-      });
+
+    axios
+      .get(`${this.url}/requests/${uid}`)
+      .then(
+        (friendRequests: Array<string>) =>
+          (theirFriendRequests = friendRequests)
+      );
 
     if (!theirFriendRequests.includes(this.uid)) {
       theirFriendRequests.push(this.uid);
 
-      db.ref()
-        .child("friendRequests/" + uid)
-        .set(theirFriendRequests);
+      axios
+        .put(`${this.url}/requests/${uid}`, { friendRequests: theirFriendRequests })
+        .then(
+          (friendRequests: Array<string>) =>
+            (theirFriendRequests = friendRequests)
+        );
     }
   }
 
   acceptFriendRequest(uid: string) {
     let theirFriendList: Array<string> = [];
 
-    db.ref()
-      .child("friendList/" + uid)
-      .on("value", snap => {
-        if (snap != null && snap.val() != null) {
-          theirFriendList = snap.val();
-        }
-      });
+    axios
+      .get(`${this.url}/friends/${uid}`)
+      .then((friendList: Array<string>) => (theirFriendList = friendList));
 
     theirFriendList.push(this.uid);
 
-    db.ref()
-      .child("friendList/" + uid)
-      .set(theirFriendList);
+    axios.put(`${this.url}/friends/${uid}`, { friendList: theirFriendList });
 
     this.friendList.push(uid);
     this.saveFriendList();
 
-    this.friendRequests = this.friendRequests.filter(elem => elem !== uid);
+    this.friendRequests = this.friendRequests.filter((elem) => elem !== uid);
     this.saveFriendRequests();
   }
 
   declineFriendRequest(uid: string) {
-    this.friendRequests = this.friendRequests.filter(elem => elem !== uid);
+    this.friendRequests = this.friendRequests.filter((elem) => elem !== uid);
     this.saveFriendRequests();
   }
 
   removeFriend(uid: string) {
-    this.friendList = this.friendList.filter(elem => elem !== uid);
+    this.friendList = this.friendList.filter((elem) => elem !== uid);
     this.saveFriendList();
   }
 
   saveFriendList() {
-    db.ref()
-      .child("friendList/" + this.uid)
-      .set(this.friendList);
-    this.emit("change_friend_list");
+    axios
+      .put(`${this.url}/friends`, { friendList: this.friendList })
+      .then((friendList: Array<string>) => (this.friendList = friendList));
+
+    this.emit('change_friend_list');
   }
 
   saveFriendRequests() {
-    db.ref()
-      .child("friendRequests/" + this.uid)
-      .set(this.friendList);
-    this.emit("change_friend_requests");
+    axios
+      .put(`${this.url}/requests`, { friendRequests: this.friendRequests })
+      .then(
+        (friendRequests: Array<string>) =>
+          (this.friendRequests = friendRequests)
+      );
+
+    this.emit('change_friend_requests');
   }
 
   isFriend(uid: string): boolean {
@@ -120,23 +113,23 @@ class FriendStore extends EventEmitter {
 
   handleActions = (action: any) => {
     switch (action.type) {
-      case "SEND_FRIEND_REQUEST": {
+      case 'SEND_FRIEND_REQUEST': {
         this.sendFriendRequest(action.uid);
         break;
       }
-      case "ACCEPT_FRIEND_REQUEST": {
+      case 'ACCEPT_FRIEND_REQUEST': {
         this.acceptFriendRequest(action.uid);
         break;
       }
-      case "DECLINE_FRIEND_REQUEST": {
+      case 'DECLINE_FRIEND_REQUEST': {
         this.declineFriendRequest(action.uid);
         break;
       }
-      case "REMOVE_FRIEND": {
+      case 'REMOVE_FRIEND': {
         this.removeFriend(action.uid);
         break;
       }
-      case "LOGIN": {
+      case 'LOGIN': {
         this.onLogin(action.uObject);
         break;
       }

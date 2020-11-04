@@ -25,9 +25,10 @@ class LocationStore extends EventEmitter {
     this.uid = userObject.uid;
   }
 
+  // only gets set once on login
   setLocation(location: ILocation) {
     axios
-      .put(`{$url}/locations/{$uid}`)
+      .put(`${this.url}/locations/${this.uid}`)
       .then((locationDetails: ILocation) => (this.location = locationDetails));
 
     this.emit('location');
@@ -64,7 +65,7 @@ class LocationStore extends EventEmitter {
 
   async getLocations() {
     axios
-      .get(`{$url}/locations/`)
+      .get(`${this.url}/locations/`)
       .then((locations: Array<ILocationUser>) => ({ locations }));
   }
 

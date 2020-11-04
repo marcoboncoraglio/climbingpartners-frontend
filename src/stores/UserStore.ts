@@ -19,7 +19,7 @@ class UserStore extends EventEmitter {
     imgUrl: '',
   };
 
-  url: string = process.env.BACKEND_URL_TEST || 'localhost:4000';
+  url: string = process.env.BACKEND_URL_TEST || 'localhost:4000/api/';
 
   getId(): string {
     return this.uid;
@@ -32,7 +32,7 @@ class UserStore extends EventEmitter {
       });
     } else {
       return new Promise((res) => {
-        axios.get(`{$url}/userDetails/{$uid}`).then((json) => res(json));
+        axios.get(`${this.url}/userDetails/{$uid}`).then((json) => res(json));
       });
     }
   }
@@ -42,14 +42,14 @@ class UserStore extends EventEmitter {
       return this.card;
     } else {
       return new Promise((res) => {
-        axios.get(`{$url}/userCards/{$uid}`).then((json) => res(json));
+        axios.get(`${this.url}/userCards/{$uid}`).then((json) => res(json));
       });
     }
   }
 
   setDetails(details: IUserDetails) {
     axios
-      .put(`{$url}/userDetails/{$uid}`)
+      .put(`${this.url}/userDetails/{$uid}`)
       .then((updatedDetails: IUserDetails) => (this.details = updatedDetails));
 
     this.emit('change_details');
@@ -57,11 +57,12 @@ class UserStore extends EventEmitter {
 
   setCard(card: IUserCard) {
     axios
-      .put(`{$url}/userCard/{$uid}`)
+      .put(`${this.url}/userCard/{$uid}`)
       .then((updatedCard: IUserCard) => (this.card = updatedCard));
 
     this.emit('change_card');
   }
+  
   onLogin(userObj: any) {
     this.uid = userObj.uid;
     this.getCard();
