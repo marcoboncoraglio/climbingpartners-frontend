@@ -5,13 +5,13 @@ Application to find climbing partners around you
 
 ## Frontend
 
-### General
-- refactor out database logic from stores to services to which stores hold a reference to
-- refactor AppViewProfileCard 
-- migrate to react suspense
-    - https://www.youtube.com/watch?v=SCQgE4mTnjU&list=LLE6fjBTUKY1ovpgW8szLOcQ&index=7&t=0s
+bugs: 
+page does not refresh after login or logout
 
-- migrate to react hooks
+### General
+- refactor AppViewProfileCard 
+
+- migrate to react hooks/es6
     - search for every direct call to setState try to replace with useState hook
 
 - migrate to dev-dependencies in frontend
@@ -25,8 +25,10 @@ Application to find climbing partners around you
 
 ### Users
 - add img for usr and crop
-    - add img: https://www.youtube.com/watch?v=XeiOnkEI7XI&list=LLE6fjBTUKY1ovpgW8szLOcQ&index=3&t=404s 
-    - crop: https://github.com/DominicTobias/react-image-crop 
+- implement using something like amazon s3
+
+### Togglemenu
+- needs a bit of work, it's hideous
 
 ### Settings
 - implement privacy store that handles visibility
