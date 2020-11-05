@@ -8,6 +8,8 @@ Application to find climbing partners around you
 bugs: 
 page does not refresh after login or logout
 
+move api requests to actions, store should be the place where we get data, not execute operations 
+
 ### General
 - refactor AppViewProfileCard 
 
@@ -59,3 +61,4 @@ page does not refresh after login or logout
 - Get request for all users within a certain range
 
 - It would be nice to move to dynamodb instead of mongodb. Unfortunately I decided to use mongoose and connect passport js directly to mongoose, so it's probably not trivial. Use mongodb from aws for now...
+

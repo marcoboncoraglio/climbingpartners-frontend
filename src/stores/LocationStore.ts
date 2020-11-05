@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import dispatcher from '../dispatcher';
-import { ILocation, ILocationUser } from '../interfaces/LocationInterfaces';
+import { ILocation } from '../interfaces/LocationInterfaces';
 const axios = require('axios');
 
 class LocationStore extends EventEmitter {
@@ -23,7 +23,6 @@ class LocationStore extends EventEmitter {
   }
 
   onLogin(uid: string) {
-    console.log('onLogin');
     this.uid = uid;
     this.token = localStorage.getItem('token');
   }
