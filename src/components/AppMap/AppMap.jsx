@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import './AppMap.css';
 
 import { Map, TileLayer, Marker } from 'react-leaflet';
-
 import { setUserLocation } from '../../actions/LocationActions';
-
 import LocationStore from '../../stores/LocationStore';
 
 class AppMap extends Component {
@@ -32,9 +30,13 @@ class AppMap extends Component {
 
   // setTimeout?
   getUserLocations = () => {
-    LocationStore.getLocations().then((locations) =>
-      this.setState((prevState) => ({ ...prevState, userLocations: locations }))
-    );
+    LocationStore.getLocations().then((locations) => {
+      console.log(locations);
+      this.setState((prevState) => ({
+        ...prevState,
+        userLocations: locations,
+      }));
+    });
   };
 
   putLocationInMap = () => {
@@ -44,19 +46,6 @@ class AppMap extends Component {
         location: JSON.parse(localStorage.getItem('location')),
         zoom: 12,
       }));
-  };
-
-  snapshotToArray = (snapshot) => {
-    var returnArr = [];
-
-    snapshot.forEach(function (childSnapshot) {
-      var item = childSnapshot.val();
-      item.key = childSnapshot.key;
-
-      returnArr.push(item);
-    });
-
-    return returnArr;
   };
 
   componentDidMount() {

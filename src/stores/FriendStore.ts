@@ -4,7 +4,7 @@ const axios = require('axios');
 
 class FriendStore extends EventEmitter {
   uid: string = '0';
-  token: any;
+  token: any = localStorage.getItem('token');
 
   friendList: Array<string> = [];
 
@@ -12,9 +12,9 @@ class FriendStore extends EventEmitter {
 
   url: string = process.env.BACKEND_URL_TEST || 'http://localhost:4000/api/friendLists';
 
-  onLogin(uid: string, token: any) {
+  onLogin(uid: string) {
     this.uid = uid;
-    this.token = token;
+    this.token = localStorage.getItem('token');
 
     axios({
       method: 'get',
@@ -159,7 +159,7 @@ class FriendStore extends EventEmitter {
         break;
       }
       case 'LOGIN_COMPLETE': {
-        this.onLogin(action.uid, action.token);
+        this.onLogin(action.uid);
         break;
       }
       default: {

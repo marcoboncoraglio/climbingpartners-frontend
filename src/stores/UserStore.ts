@@ -5,7 +5,7 @@ const axios = require('axios');
 
 class UserStore extends EventEmitter {
   uid: string = '0';
-  token: any;
+  token: any = localStorage.getItem('token');
 
   details: IUserDetails = {
     birthday: new Date(1995, 11, 17),
@@ -86,9 +86,9 @@ class UserStore extends EventEmitter {
     this.emit('change_card');
   }
 
-  onLogin(uid: string, token: any) {
+  onLogin(uid: string) {
     this.uid = uid;
-    this.token = token;
+    this.token = localStorage.getItem('token');
 
     axios({
       method: 'get',
@@ -122,7 +122,7 @@ class UserStore extends EventEmitter {
         break;
       }
       case 'LOGIN_COMPLETE': {
-        this.onLogin(action.uid, action.token);
+        this.onLogin(action.uid);
         break;
       }
       default: {

@@ -1,28 +1,27 @@
-import React, { Component } from "react";
-import "./App.css";
+import React, { Component } from 'react';
+import './App.css';
 
-import MapView from "./views/MapView/MapView";
-import FriendsView from "./views/FriendsView/FriendsView";
-import MessagesView from "./views/MessagesView/MessagesView";
-import ProfileView from "./views/ProfileView/ProfileView";
-import SettingsView from "./views/SettingsView/SettingsView";
-import WelcomeView from "./views/WelcomeView/WelcomeView";
-import LocalLoginView from "./views/LocalLoginView/LocalLoginView";
-import LocalRegisterView from "./views/LocalRegisterView/LocalRegisterView";
+import MapView from './views/MapView/MapView';
+import FriendsView from './views/FriendsView/FriendsView';
+import MessagesView from './views/MessagesView/MessagesView';
+import ProfileView from './views/ProfileView/ProfileView';
+import SettingsView from './views/SettingsView/SettingsView';
+import WelcomeView from './views/WelcomeView/WelcomeView';
+import LocalLoginView from './views/LocalLoginView/LocalLoginView';
+import LocalRegisterView from './views/LocalRegisterView/LocalRegisterView';
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import LoginStore from "./stores/LoginStore";
+import LoginStore from './stores/LoginStore';
 
 class App extends Component {
-
   state = {
-    loggedIn: false
+    loggedIn: localStorage.getItem('token') !== null,
   };
 
   componentDidMount() {
-    LoginStore.on("LOGIN_COMPLETE", this.handleLogin);
-    LoginStore.on("LOGOUT", this.handleLogout);
+    LoginStore.on('LOGIN_COMPLETE', this.handleLogout);
+    LoginStore.on('LOGOUT', this.handleLogout);
   }
 
   handleLogin = () => {
@@ -30,6 +29,7 @@ class App extends Component {
   };
 
   handleLogout = () => {
+    // call action to delete token fro localstorage
     this.setState({ loggedIn: false });
   };
 

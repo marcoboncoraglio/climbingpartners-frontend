@@ -5,7 +5,7 @@ const axios = require('axios');
 
 class LocationStore extends EventEmitter {
   uid: string = '0';
-  token: any;
+  token: any = localStorage.getItem('token');
 
   location: ILocation = {
     lat: 0,
@@ -22,11 +22,10 @@ class LocationStore extends EventEmitter {
     return this.uid;
   }
 
-  async onLogin(uid: string, token: any) {
+  onLogin(uid: string) {
+    console.log('onLogin');
     this.uid = uid;
-    this.token = token;
-
-    await this.setLocation();
+    this.token = localStorage.getItem('token');
   }
 
   // only gets set once on login
@@ -75,14 +74,18 @@ class LocationStore extends EventEmitter {
     });
   }
 
-  async getLocations() {
-    axios({
-      method: 'get',
-      url: `${this.url}/locations`,
-      headers: {
-        Authorization: 'Bearer ' + this.token,
-      },
-    }).then((locations: Array<ILocationUser>) => ({ locations }));
+  getLocations() {
+    return new Promise((res) => {
+      axios({
+        method: 'get',
+        url: `${this.url}/locations`,
+        headers: {
+          Authorization: 'Bearer ' + this.token,
+        },
+      }).then((response: any) => {
+        res(response.data);
+      });
+    });
   }
 
   enableGPS() {
@@ -106,7 +109,7 @@ class LocationStore extends EventEmitter {
   handleActions = (action: any) => {
     switch (action.type) {
       case 'LOGIN_COMPLETE': {
-        this.onLogin(action.uid, action.token);
+        this.onLogin(action.uid);
         break;
       }
       default: {

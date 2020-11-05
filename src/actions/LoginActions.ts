@@ -16,11 +16,10 @@ export function loginUserLocal(username: string, password: string) {
   });
 }
 
-export function loginComplete(uid: string, token: any) {
+export function loginComplete(uid: string) {
   dispatcher.dispatch({
     type: 'LOGIN_COMPLETE',
     uid: uid,
-    token: token,
   });
 }
 

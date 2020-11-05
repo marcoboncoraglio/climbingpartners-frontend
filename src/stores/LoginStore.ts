@@ -21,7 +21,8 @@ class LoginStore extends EventEmitter {
         if (res.data.token && res.data.uid) {
           this.token = res.data.token;
           this.uid = res.data.uid;
-          loginComplete(this.uid, this.token);
+          localStorage.setItem('token', this.token);
+          loginComplete(this.uid);
           this.emit('LOGIN_COMPLETE');
         } else {
           console.log('error: ', res.data);
@@ -42,8 +43,8 @@ class LoginStore extends EventEmitter {
         if (res.data.token && res.data.uid) {
           this.token = res.data.token;
           this.uid = res.data.uid;
-          console.log("uid: ", this.uid);
-          loginComplete(this.uid, this.token);
+          localStorage.setItem('token', this.token);
+          loginComplete(this.uid);
           this.emit('LOGIN_COMPLETE');
         } else {
           console.log('error: ', res.data);
@@ -56,6 +57,7 @@ class LoginStore extends EventEmitter {
   logout() {
     this.token = null;
     this.uid = undefined;
+    localStorage.clear();
     this.username = 'username';
   }
 
