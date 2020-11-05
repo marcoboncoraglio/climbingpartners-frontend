@@ -42,7 +42,7 @@ Application to find climbing partners around you
     - create circles around areas with many climbers with caption x number of climbers in this circle
     - allow the display of posts
 
-### Posts
+### Posts/Events
 - allow users to create posts on the map (visibility in settings) that represent climbing trips where people can join
 
 ### Unit tests
@@ -54,5 +54,6 @@ Application to find climbing partners around you
 ## Backend
 
 ### Implement backend
-- Eventually reimplement entire backend with node, express and mongoose
 - Get request for all users within a certain range
+
+- It would be nice to move to dynamodb instead of mongodb. Unfortunately I decided to use mongoose and connect passport js directly to mongoose, so it's probably not trivial. Use mongodb from aws for now...
