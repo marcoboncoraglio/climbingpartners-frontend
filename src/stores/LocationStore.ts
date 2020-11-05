@@ -31,12 +31,12 @@ class LocationStore extends EventEmitter {
 
   // only gets set once on login
   async setLocation() {
-    const location = await this.getLocation();
+    const location: any = await this.getLocation();
 
     axios({
       method: 'put',
       url: `${this.url}/locations/${this.uid}`,
-      data: { location },
+      data: { lat: location.lat, lng: location.lng },
       headers: {
         Authorization: 'Bearer ' + this.token,
       },

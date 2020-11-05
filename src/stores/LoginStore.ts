@@ -31,8 +31,27 @@ class LoginStore extends EventEmitter {
       .catch((err: any) => console.log(err));
   }
 
-  //todo: implement this
-  registerLocal(username: string, password: string) {}
+  registerLocal(username: string, password: string) {
+    this.username = username;
+    axios
+      .post(`${this.url}/auth/register`, {
+        username: username,
+        password: password,
+      })
+      .then((res: any) => {
+        if (res.data.token && res.data.uid) {
+          this.token = res.data.token;
+          this.uid = res.data.uid;
+          console.log("uid: ", this.uid);
+          loginComplete(this.uid, this.token);
+          this.emit('LOGIN_COMPLETE');
+        } else {
+          console.log('error: ', res.data);
+          return res.data;
+        }
+      })
+      .catch((err: any) => console.log(err));
+  }
 
   logout() {
     this.token = null;
@@ -44,7 +63,7 @@ class LoginStore extends EventEmitter {
     return this.uid;
   }
 
-  IsLoggedIn(): boolean {
+  isLoggedIn(): boolean {
     return this.uid !== undefined;
   }
 
@@ -52,6 +71,10 @@ class LoginStore extends EventEmitter {
     switch (action.type) {
       case 'LOGIN': {
         this.loginLocal(action.username, action.password);
+        break;
+      }
+      case 'REGISTER': {
+        this.registerLocal(action.username, action.password);
         break;
       }
       case 'LOGOUT': {

@@ -10,8 +10,6 @@ import WelcomeView from "./views/WelcomeView/WelcomeView";
 import LocalLoginView from "./views/LocalLoginView/LocalLoginView";
 import LocalRegisterView from "./views/LocalRegisterView/LocalRegisterView";
 
-
-
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import LoginStore from "./stores/LoginStore";

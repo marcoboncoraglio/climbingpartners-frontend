@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Avatar,
   Button,
@@ -12,7 +12,8 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAlert } from 'react-alert';
-import { loginUserLocal } from '../../actions/LoginActions'
+import { loginUserLocal } from '../../actions/LoginActions';
+import LoginStore from '../../stores/LoginStore';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,12 +37,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LocalLoginView() {
+export default function LocalLoginView(props) {
   const classes = useStyles();
   const alert = useAlert();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    LoginStore.on('LOGIN_COMPLETE', () => props.history.push('/'));
+
+    return () => {
+      LoginStore.removeAllListeners();
+    };
+  });
 
   function handleChangeUsername(event) {
     setUsername(event.target.value);

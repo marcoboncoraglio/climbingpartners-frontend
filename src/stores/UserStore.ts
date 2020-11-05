@@ -76,7 +76,7 @@ class UserStore extends EventEmitter {
   setCard(card: IUserCard) {
     axios({
       method: 'put',
-      url: `${this.url}/userCard/`,
+      url: `${this.url}/userCards/`,
       data: { card },
       headers: {
         Authorization: 'Bearer ' + this.token,
@@ -89,8 +89,26 @@ class UserStore extends EventEmitter {
   onLogin(uid: string, token: any) {
     this.uid = uid;
     this.token = token;
-    this.getCard();
-    this.getDetails();
+
+    axios({
+      method: 'get',
+      url: `${this.url}/userCards`,
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    }).then((card: any) => {
+      this.card = card;
+    });
+
+    axios({
+      method: 'get',
+      url: `${this.url}/userDetails`,
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    }).then((details: any) => {
+      this.details = details;
+    });
   }
 
   handleActions = (action: any) => {
