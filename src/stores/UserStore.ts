@@ -5,6 +5,7 @@ const axios = require('axios');
 
 class UserStore extends EventEmitter {
   uid: string = '0';
+  token: any;
 
   details: IUserDetails = {
     birthday: new Date(1995, 11, 17),
@@ -19,7 +20,7 @@ class UserStore extends EventEmitter {
     imgUrl: '',
   };
 
-  url: string = process.env.BACKEND_URL_TEST || 'localhost:4000/api/';
+  url: string = process.env.BACKEND_URL_TEST || 'http://localhost:4000/api';
 
   getId(): string {
     return this.uid;
@@ -32,7 +33,13 @@ class UserStore extends EventEmitter {
       });
     } else {
       return new Promise((res) => {
-        axios.get(`${this.url}/userDetails/{$uid}`).then((json) => res(json));
+        axios({
+          method: 'get',
+          url: `${this.url}/userDetails/${uid}`,
+          headers: {
+            Authorization: 'Bearer ' + this.token,
+          },
+        }).then((details: any) => res(details));
       });
     }
   }
@@ -42,29 +49,46 @@ class UserStore extends EventEmitter {
       return this.card;
     } else {
       return new Promise((res) => {
-        axios.get(`${this.url}/userCards/{$uid}`).then((json) => res(json));
+        axios({
+          method: 'get',
+          url: `${this.url}/userCards/${uid}`,
+          headers: {
+            Authorization: 'Bearer ' + this.token,
+          },
+        }).then((card: any) => res(card));
       });
     }
   }
 
   setDetails(details: IUserDetails) {
-    axios
-      .put(`${this.url}/userDetails/{$uid}`)
-      .then((updatedDetails: IUserDetails) => (this.details = updatedDetails));
+    axios({
+      method: 'put',
+      url: `${this.url}/userDetails/`,
+      data: { details },
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    });
 
     this.emit('change_details');
   }
 
   setCard(card: IUserCard) {
-    axios
-      .put(`${this.url}/userCard/{$uid}`)
-      .then((updatedCard: IUserCard) => (this.card = updatedCard));
+    axios({
+      method: 'put',
+      url: `${this.url}/userCard/`,
+      data: { card },
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    });
 
     this.emit('change_card');
   }
-  
-  onLogin(userObj: any) {
-    this.uid = userObj.uid;
+
+  onLogin(uid: string, token: any) {
+    this.uid = uid;
+    this.token = token;
     this.getCard();
     this.getDetails();
   }
@@ -79,8 +103,8 @@ class UserStore extends EventEmitter {
         this.setCard(action.card);
         break;
       }
-      case 'LOGIN': {
-        this.onLogin(action.uObject);
+      case 'LOGIN_COMPLETE': {
+        this.onLogin(action.uid, action.token);
         break;
       }
       default: {

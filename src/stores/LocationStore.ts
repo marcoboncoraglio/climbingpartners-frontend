@@ -5,6 +5,7 @@ const axios = require('axios');
 
 class LocationStore extends EventEmitter {
   uid: string = '0';
+  token: any;
 
   location: ILocation = {
     lat: 0,
@@ -15,22 +16,33 @@ class LocationStore extends EventEmitter {
 
   highAccuracy: boolean = false;
 
-  url: string = process.env.BACKEND_URL_TEST || 'localhost:4000/api/';
+  url: string = process.env.BACKEND_URL_TEST || 'http://localhost:4000/api';
 
   getId() {
     return this.uid;
   }
 
-  onLogin(userObject: any) {
-    this.uid = userObject.uid;
+  async onLogin(uid: string, token: any) {
+    this.uid = uid;
+    this.token = token;
+
+    await this.setLocation();
   }
 
   // only gets set once on login
-  setLocation(location: ILocation) {
-    axios
-      .put(`${this.url}/locations/${this.uid}`)
-      .then((locationDetails: ILocation) => (this.location = locationDetails));
+  async setLocation() {
+    const location = await this.getLocation();
 
+    axios({
+      method: 'put',
+      url: `${this.url}/locations/${this.uid}`,
+      data: { location },
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    }).then((location: ILocation) => (this.location = location));
+
+    // this should go somewhere else?
     this.emit('location');
   }
 
@@ -64,9 +76,13 @@ class LocationStore extends EventEmitter {
   }
 
   async getLocations() {
-    axios
-      .get(`${this.url}/locations/`)
-      .then((locations: Array<ILocationUser>) => ({ locations }));
+    axios({
+      method: 'get',
+      url: `${this.url}/locations`,
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    }).then((locations: Array<ILocationUser>) => ({ locations }));
   }
 
   enableGPS() {
@@ -89,12 +105,8 @@ class LocationStore extends EventEmitter {
 
   handleActions = (action: any) => {
     switch (action.type) {
-      case 'SET_LOCATION': {
-        this.setLocation(action.location);
-        break;
-      }
-      case 'LOGIN': {
-        this.onLogin(action.uObject);
+      case 'LOGIN_COMPLETE': {
+        this.onLogin(action.uid, action.token);
         break;
       }
       default: {

@@ -23,8 +23,8 @@ class App extends Component {
   };
 
   componentDidMount() {
-    LoginStore.on("login", this.handleLogin);
-    LoginStore.on("logout", this.handleLogout);
+    LoginStore.on("LOGIN_COMPLETE", this.handleLogin);
+    LoginStore.on("LOGOUT", this.handleLogout);
   }
 
   handleLogin = () => {
