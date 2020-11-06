@@ -12,7 +12,10 @@ import UserStore from '../../stores/UserStore';
 //TODO: BUG: when changing from a viewed profile to your own, details get reloaded but card stays the same
 class AppProfileCard extends Component {
   state = {
-    card: {},
+    card: {
+      name: 'Name',
+      imgUrl: 'url',
+    },
   };
 
   componentDidMount() {

@@ -79,7 +79,7 @@ class App extends Component {
             condition={this.state.loggedIn}
           />
           <AuthenticatedRoute
-            path="/profile:id"
+            path="/profile/:id"
             exact={true}
             component={ProfileView}
             condition={this.state.loggedIn}

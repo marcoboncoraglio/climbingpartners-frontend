@@ -28,9 +28,7 @@ class LocationStore extends EventEmitter {
   }
 
   // only gets set once on login
-  async setLocation() {
-    const location: any = await this.getLocation();
-
+  setLocation(location: any) {
     axios({
       method: 'put',
       url: `${this.url}/locations/${this.uid}`,
@@ -109,6 +107,10 @@ class LocationStore extends EventEmitter {
     switch (action.type) {
       case 'LOGIN_COMPLETE': {
         this.onLogin(action.uid);
+        break;
+      }
+      case 'SET_LOCATION': {
+        this.setLocation(action.location);
         break;
       }
       default: {

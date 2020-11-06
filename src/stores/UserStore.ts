@@ -65,7 +65,7 @@ class UserStore extends EventEmitter {
           headers: {
             Authorization: 'Bearer ' + this.token,
           },
-        }).then((details: any) => res(details));
+        }).then((response: any) => res(response.data));
       });
     }
   }
@@ -87,7 +87,7 @@ class UserStore extends EventEmitter {
           headers: {
             Authorization: 'Bearer ' + this.token,
           },
-        }).then((card: any) => res(card));
+        }).then((response: any) => res(response.data));
       });
     }
   }
