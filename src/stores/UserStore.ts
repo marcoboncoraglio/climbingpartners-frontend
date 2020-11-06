@@ -7,20 +7,42 @@ class UserStore extends EventEmitter {
   uid: string = '0';
   token: any = localStorage.getItem('token');
 
-  details: IUserDetails = {
-    birthday: new Date(1995, 11, 17),
-    about: 'Hi there!',
-    climbingStyles: ['Lead', 'Bouldering'],
-    availableEquipment: ['60m Rope'],
-    languagesSpoken: ['English'],
-  };
-
-  card: IUserCard = {
-    name: '',
-    imgUrl: '',
-  };
+  details!: IUserDetails;
+  card!: IUserCard;
 
   url: string = process.env.BACKEND_URL_TEST || 'http://localhost:4000/api';
+
+  onLogin(uid: string) {
+    this.uid = uid;
+    this.token = localStorage.getItem('token');
+
+    this.initCard();
+    this.initDetails();
+  }
+
+  initCard(): any {
+    axios({
+      method: 'get',
+      url: `${this.url}/userCards`,
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    }).then((res: any) => {
+      this.card = res.data;
+    });
+  }
+
+  initDetails(): any {
+    axios({
+      method: 'get',
+      url: `${this.url}/userDetails`,
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    }).then((res: any) => {
+      this.details = res.data;
+    });
+  }
 
   getId(): string {
     return this.uid;
@@ -29,7 +51,11 @@ class UserStore extends EventEmitter {
   getDetails(uid?: string) {
     if (!uid) {
       return new Promise((res) => {
-        res(this.details);
+        if (this.details) res(this.details);
+        else {
+          this.initDetails();
+          res(this.details);
+        }
       });
     } else {
       return new Promise((res) => {
@@ -46,7 +72,13 @@ class UserStore extends EventEmitter {
 
   getCard(uid?: string) {
     if (!uid) {
-      return this.card;
+      return new Promise((res) => {
+        if (this.card) res(this.card);
+        else {
+          this.initCard();
+          res(this.card);
+        }
+      });
     } else {
       return new Promise((res) => {
         axios({
@@ -64,13 +96,19 @@ class UserStore extends EventEmitter {
     axios({
       method: 'put',
       url: `${this.url}/userDetails/`,
-      data: { details },
+      data: details,
       headers: {
         Authorization: 'Bearer ' + this.token,
       },
-    });
+    }).then((res: any) => {
+      this.details.about = res.data.about;
+      this.details.birthday = res.data.birthday;
+      this.details.languagesSpoken = res.data.languagesSpoken;
+      this.details.climbingStyles = res.data.climbingStyles;
+      this.details.availableEquipment = res.data.availableEquipment;
 
-    this.emit('change_details');
+      this.emit('change_details');
+    });
   }
 
   setCard(card: IUserCard) {
@@ -81,33 +119,11 @@ class UserStore extends EventEmitter {
       headers: {
         Authorization: 'Bearer ' + this.token,
       },
-    });
+    }).then((res: any) => {
+      this.card.name = res.data.name;
+      this.card.imgUrl = res.data.imgUrl;
 
-    this.emit('change_card');
-  }
-
-  onLogin(uid: string) {
-    this.uid = uid;
-    this.token = localStorage.getItem('token');
-
-    axios({
-      method: 'get',
-      url: `${this.url}/userCards`,
-      headers: {
-        Authorization: 'Bearer ' + this.token,
-      },
-    }).then((card: any) => {
-      this.card = card;
-    });
-
-    axios({
-      method: 'get',
-      url: `${this.url}/userDetails`,
-      headers: {
-        Authorization: 'Bearer ' + this.token,
-      },
-    }).then((details: any) => {
-      this.details = details;
+      this.emit('change_card');
     });
   }
 

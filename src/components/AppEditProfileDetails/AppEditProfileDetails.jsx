@@ -16,17 +16,17 @@ import { Button } from '@material-ui/core';
 class AppEditProfileDetails extends Component {
   state = {
     details: {
-      birthday: 0,
-      about: "",
+      birthday: new Date(),
+      about: '',
       climbingStyles: [],
       availableEquipment: [],
-      languagesSpoken: []
-    }
-  }
+      languagesSpoken: [],
+    },
+  };
 
   componentDidMount() {
     this.getUserDetails();
-    UserStore.on("change_details", this.getUserDetails);
+    UserStore.on('change_details', this.getUserDetails);
   }
 
   componentWillUnmount() {
@@ -34,26 +34,24 @@ class AppEditProfileDetails extends Component {
   }
 
   getUserDetails = () => {
-    UserStore.getDetails()
-      .then((details) => {
-        this.setState({
-          details: details
-        });
-      })
-
-  }
+    UserStore.getDetails().then((details) => {
+      this.setState({
+        details: details,
+      });
+    });
+  };
 
   saveChanges = () => {
     editUserDetails(this.state.details);
-  }
+  };
 
-  handleSaveBirthday = date => {
+  handleSaveBirthday = (date) => {
     let tmpDetails = Object.assign({}, this.state.details);
     tmpDetails.birthday = date.toString();
     this.setState({ details: tmpDetails });
-  }
+  };
 
-  handleChangeAbout = event => {
+  handleChangeAbout = (event) => {
     let tmpDetails = Object.assign({}, this.state.details);
     tmpDetails.about = event.target.value;
     this.setState({ details: tmpDetails });
@@ -81,7 +79,7 @@ class AppEditProfileDetails extends Component {
         return;
       }
     }
-  }
+  };
 
   handleDeleteChip = (type, item) => {
     let tmpUser = Object.assign({}, this.state.details);
@@ -105,7 +103,7 @@ class AppEditProfileDetails extends Component {
         return;
       }
     }
-  }
+  };
 
   render() {
     return (
@@ -116,14 +114,16 @@ class AppEditProfileDetails extends Component {
           </ListItem>
           <ListItem>
             {
-              <KeyboardDatePicker fullWidth
+              <KeyboardDatePicker
+                fullWidth
                 label="Birthday"
                 value={this.state.details.birthday}
                 format="dd/MM/yyyy"
                 InputLabelProps={{
                   shrink: true,
                 }}
-                onChange={this.handleSaveBirthday} />
+                onChange={this.handleSaveBirthday}
+              />
             }
           </ListItem>
           <ListItem>
@@ -136,28 +136,35 @@ class AppEditProfileDetails extends Component {
                 shrink: true,
               }}
               value={this.state.details.about}
-              onChange={this.handleChangeAbout} />
+              onChange={this.handleChangeAbout}
+            />
           </ListItem>
           <ListItem>
-            <ChipInput fullWidth
+            <ChipInput
+              fullWidth
               label="Languages spoken"
               value={this.state.details.languagesSpoken}
               onAdd={(chip) => this.handleAddChip('lang', chip)}
-              onDelete={(chip) => this.handleDeleteChip('lang', chip)} />
+              onDelete={(chip) => this.handleDeleteChip('lang', chip)}
+            />
           </ListItem>
           <ListItem>
-            <ChipInput fullWidth
+            <ChipInput
+              fullWidth
               label="Climbing styles"
               value={this.state.details.climbingStyles}
               onAdd={(chip) => this.handleAddChip('style', chip)}
-              onDelete={(chip) => this.handleDeleteChip('style', chip)} />
+              onDelete={(chip) => this.handleDeleteChip('style', chip)}
+            />
           </ListItem>
           <ListItem>
-            <ChipInput fullWidth
+            <ChipInput
+              fullWidth
               label="Available equipment"
               value={this.state.details.availableEquipment}
               onAdd={(chip) => this.handleAddChip('equip', chip)}
-              onDelete={(chip) => this.handleDeleteChip('equip', chip)} />
+              onDelete={(chip) => this.handleDeleteChip('equip', chip)}
+            />
           </ListItem>
           <ListItem>
             <Button size="large" color="primary" onClick={this.saveChanges}>
@@ -166,7 +173,7 @@ class AppEditProfileDetails extends Component {
           </ListItem>
         </List>
       </Paper>
-    )
+    );
   }
 }
 

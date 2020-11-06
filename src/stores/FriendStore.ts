@@ -10,7 +10,8 @@ class FriendStore extends EventEmitter {
 
   friendRequests: Array<string> = [];
 
-  url: string = process.env.BACKEND_URL_TEST || 'http://localhost:4000/api/friendLists';
+  url: string =
+    process.env.BACKEND_URL_TEST || 'http://localhost:4000/api/friendLists';
 
   onLogin(uid: string) {
     this.uid = uid;
@@ -22,9 +23,9 @@ class FriendStore extends EventEmitter {
       headers: {
         Authorization: 'Bearer ' + this.token,
       },
-    }).then((friendLists: any) => {
-      this.friendList = friendLists.friendList;
-      this.friendRequests = friendLists.friendRequests;
+    }).then((res: any) => {
+      this.friendList = res.data.friendList;
+      this.friendRequests = res.data.friendRequests;
     });
   }
 
@@ -37,9 +38,7 @@ class FriendStore extends EventEmitter {
       headers: {
         Authorization: 'Bearer ' + this.token,
       },
-    }).then(
-      (friendRequests: Array<string>) => (theirFriendRequests = friendRequests)
-    );
+    }).then((res: any) => (theirFriendRequests = res.data.friendRequests));
 
     if (!theirFriendRequests.includes(this.uid)) {
       theirFriendRequests.push(this.uid);
@@ -65,7 +64,7 @@ class FriendStore extends EventEmitter {
       headers: {
         Authorization: 'Bearer ' + this.token,
       },
-    }).then((friendList: Array<string>) => (theirFriendList = friendList));
+    }).then((res: any) => (theirFriendList = res.data.friendList));
 
     theirFriendList.push(this.uid);
 
@@ -103,12 +102,10 @@ class FriendStore extends EventEmitter {
       headers: {
         Authorization: 'Bearer ' + this.token,
       },
-    }).then(() => this.emit('change_friend_list'));
-
-    axios
-      .set('Authorization', `Bearer ${this.token}`)
-      .put(`${this.url}/friends`, { friendList: this.friendList })
-      .then((friendList: Array<string>) => (this.friendList = friendList));
+    }).then((res: any) => {
+      this.friendList = res.data.friendList;
+      this.emit('change_friend_list');
+    });
 
     this.emit('change_friend_list');
   }
@@ -121,7 +118,10 @@ class FriendStore extends EventEmitter {
       headers: {
         Authorization: 'Bearer ' + this.token,
       },
-    }).then(() => this.emit('change_friend_requests'));
+    }).then((res: any) => {
+      this.friendRequests = res.data.friendRequests;
+      this.emit('change_friend_requests');
+    });
   }
 
   isFriend(uid: string): boolean {
