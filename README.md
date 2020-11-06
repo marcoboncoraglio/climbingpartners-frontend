@@ -6,7 +6,9 @@ Application to find climbing partners around you
 ## Frontend
 
 bugs: 
-page does not refresh after login or logout
+refeshing changes and breaks the state
+
+if we do not refresh, login and logout mechanism work
 
 move api requests to actions, store should be the place where we get data, not execute operations 
 
