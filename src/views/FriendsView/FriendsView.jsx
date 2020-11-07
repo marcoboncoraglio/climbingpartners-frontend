@@ -12,7 +12,6 @@ import UserStore from "../../stores/UserStore";
 class FriendsView extends Component {
   state = {
     friendList: [],
-
     friendRequests: []
   };
 

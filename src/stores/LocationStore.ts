@@ -4,7 +4,7 @@ import { ILocation } from '../interfaces/LocationInterfaces';
 const axios = require('axios');
 
 class LocationStore extends EventEmitter {
-  uid: string = '0';
+  uid: any = localStorage.getItem('uid');
   token: any = localStorage.getItem('token');
 
   location: ILocation = {
@@ -22,24 +22,25 @@ class LocationStore extends EventEmitter {
     return this.uid;
   }
 
-  onLogin(uid: string) {
-    this.uid = uid;
+  onLogin() {
+    this.uid = localStorage.getItem('uid');
     this.token = localStorage.getItem('token');
   }
 
   // only gets set once on login
   setLocation(location: any) {
-    axios({
-      method: 'put',
-      url: `${this.url}/locations/${this.uid}`,
-      data: { lat: location.lat, lng: location.lng },
-      headers: {
-        Authorization: 'Bearer ' + this.token,
-      },
-    }).then((location: ILocation) => (this.location = location));
+    if (this.uid !== undefined) {
+      axios({
+        method: 'put',
+        url: `${this.url}/locations/${this.uid}`,
+        data: { lat: location.lat, lng: location.lng },
+        headers: {
+          Authorization: 'Bearer ' + this.token,
+        },
+      }).then((location: ILocation) => (this.location = location));
 
-    // this should go somewhere else?
-    this.emit('location');
+      this.emit('location');
+    }
   }
 
   getLocation() {
@@ -106,7 +107,7 @@ class LocationStore extends EventEmitter {
   handleActions = (action: any) => {
     switch (action.type) {
       case 'LOGIN_COMPLETE': {
-        this.onLogin(action.uid);
+        this.onLogin();
         break;
       }
       case 'SET_LOCATION': {

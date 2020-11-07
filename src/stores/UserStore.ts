@@ -4,7 +4,7 @@ import { IUserDetails, IUserCard } from '../interfaces/UserInterfaces';
 const axios = require('axios');
 
 class UserStore extends EventEmitter {
-  uid: string = '0';
+  uid: any = localStorage.getItem('uid');
   token: any = localStorage.getItem('token');
 
   details!: IUserDetails;
@@ -12,8 +12,8 @@ class UserStore extends EventEmitter {
 
   url: string = process.env.BACKEND_URL_TEST || 'http://localhost:4000/api';
 
-  onLogin(uid: string) {
-    this.uid = uid;
+  onLogin() {
+    this.uid = localStorage.getItem('uid');
     this.token = localStorage.getItem('token');
 
     this.initCard();
@@ -138,7 +138,7 @@ class UserStore extends EventEmitter {
         break;
       }
       case 'LOGIN_COMPLETE': {
-        this.onLogin(action.uid);
+        this.onLogin();
         break;
       }
       default: {

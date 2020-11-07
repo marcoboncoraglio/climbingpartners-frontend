@@ -41,6 +41,7 @@ class AppMap extends Component {
 
   putLocationInMap = () => {
     localStorage.getItem('location') &&
+      localStorage.getItem('uid') &&
       this.setState((prevState) => ({
         ...prevState,
         location: JSON.parse(localStorage.getItem('location')),
@@ -78,7 +79,7 @@ class AppMap extends Component {
         />
         {this.state.userLocations
           .filter((user) => {
-            return user.id !== LocationStore.getId();
+            return user._id !== LocationStore.getId();
           })
           .map((user) => {
             const pos = [user.lat, user.lng];
@@ -87,7 +88,7 @@ class AppMap extends Component {
                 key={user.id}
                 position={pos}
                 onclick={() => {
-                  window.location = `profile/${user.id}`;
+                  window.location = `profile/${user._id}`;
                 }}
               />
             );

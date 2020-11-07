@@ -22,6 +22,7 @@ class LoginStore extends EventEmitter {
           this.token = res.data.token;
           this.uid = res.data.uid;
           localStorage.setItem('token', this.token);
+          localStorage.setItem('uid', this.uid);
           loginComplete(this.uid);
           this.emit('LOGIN_COMPLETE');
         } else {
@@ -44,8 +45,9 @@ class LoginStore extends EventEmitter {
           this.token = res.data.token;
           this.uid = res.data.uid;
           localStorage.setItem('token', this.token);
-          loginComplete(this.uid);
-          this.emit('LOGIN_COMPLETE');
+          localStorage.setItem('uid', this.uid);
+          loginComplete(this.uid);  // dispatcher, updates other stores
+          this.emit('LOGIN_COMPLETE'); // eventemitter, updates views
         } else {
           console.log('error: ', res.data);
           return res.data;
