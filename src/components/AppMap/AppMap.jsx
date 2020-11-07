@@ -78,17 +78,17 @@ class AppMap extends Component {
           noWrap
         />
         {this.state.userLocations
-          .filter((user) => {
-            return user._id !== LocationStore.getId();
+          .filter((locationObject) => {
+            return locationObject.id !== LocationStore.getId();
           })
-          .map((user) => {
-            const pos = [user.lat, user.lng];
+          .map((locationObject) => {
+            const pos = [locationObject.lat, locationObject.lng];
             return (
               <Marker
-                key={user.id}
+                key={locationObject.id}
                 position={pos}
                 onclick={() => {
-                  window.location = `profile/${user._id}`;
+                  window.location = `profile/${locationObject.id}`;
                 }}
               />
             );

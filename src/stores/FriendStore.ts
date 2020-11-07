@@ -10,7 +10,8 @@ class FriendStore extends EventEmitter {
   friendRequests: Array<string> = [];
 
   url: string =
-    process.env.BACKEND_URL_TEST || 'http://localhost:4000/api/friendLists';
+    (process.env.BACKEND_URL_TEST as string) ||
+    'http://localhost:4000/api/' + 'friendLists';
 
   async onLogin() {
     this.uid = localStorage.getItem('uid');

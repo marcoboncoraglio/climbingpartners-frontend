@@ -10,7 +10,9 @@ class UserStore extends EventEmitter {
   details!: IUserDetails;
   card!: IUserCard;
 
-  url: string = process.env.BACKEND_URL_TEST || 'http://localhost:4000/api';
+  url: string =
+    (process.env.BACKEND_URL_TEST as string) ||
+    'http://localhost:4000/api/' + 'users';
 
   async onLogin() {
     this.uid = localStorage.getItem('uid');
@@ -23,7 +25,7 @@ class UserStore extends EventEmitter {
   async initCard() {
     await axios({
       method: 'get',
-      url: `${this.url}/userCards`,
+      url: `${this.url}/cards`,
       headers: {
         Authorization: 'Bearer ' + this.token,
       },
@@ -35,7 +37,7 @@ class UserStore extends EventEmitter {
   async initDetails() {
     await axios({
       method: 'get',
-      url: `${this.url}/userDetails`,
+      url: `${this.url}/details`,
       headers: {
         Authorization: 'Bearer ' + this.token,
       },
@@ -61,7 +63,7 @@ class UserStore extends EventEmitter {
       return new Promise((res) => {
         axios({
           method: 'get',
-          url: `${this.url}/userDetails/${uid}`,
+          url: `${this.url}/details/${uid}`,
           headers: {
             Authorization: 'Bearer ' + this.token,
           },
@@ -83,7 +85,7 @@ class UserStore extends EventEmitter {
       return new Promise((res) => {
         axios({
           method: 'get',
-          url: `${this.url}/userCards/${uid}`,
+          url: `${this.url}/cards/${uid}`,
           headers: {
             Authorization: 'Bearer ' + this.token,
           },
@@ -95,7 +97,7 @@ class UserStore extends EventEmitter {
   setDetails(details: IUserDetails) {
     axios({
       method: 'put',
-      url: `${this.url}/userDetails/`,
+      url: `${this.url}/details`,
       data: details,
       headers: {
         Authorization: 'Bearer ' + this.token,
@@ -114,7 +116,7 @@ class UserStore extends EventEmitter {
   setCard(card: IUserCard) {
     axios({
       method: 'put',
-      url: `${this.url}/userCards/`,
+      url: `${this.url}/cards`,
       data: { card },
       headers: {
         Authorization: 'Bearer ' + this.token,

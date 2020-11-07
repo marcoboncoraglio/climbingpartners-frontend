@@ -8,19 +8,21 @@ class LoginStore extends EventEmitter {
   token: any;
   username: string = 'username';
 
-  url: string = process.env.BACKEND_URL_TEST || 'http://localhost:4000/api';
+  url: string =
+    (process.env.BACKEND_URL_TEST as string) ||
+    'http://localhost:4000/api/' + 'auth';
 
   loginLocal(username: string, password: string) {
     this.username = username;
     axios
-      .post(`${this.url}/auth/login`, {
+      .post(`${this.url}/login`, {
         username: username,
         password: password,
       })
       .then((res: any) => {
-        if (res.data.token && res.data.uid) {
+        if (res.data.token && res.data.id) {
           this.token = res.data.token;
-          this.uid = res.data.uid;
+          this.uid = res.data.id;
           localStorage.setItem('token', this.token);
           localStorage.setItem('uid', this.uid);
           loginComplete(this.uid);
@@ -36,17 +38,17 @@ class LoginStore extends EventEmitter {
   registerLocal(username: string, password: string) {
     this.username = username;
     axios
-      .post(`${this.url}/auth/register`, {
+      .post(`${this.url}/register`, {
         username: username,
         password: password,
       })
       .then((res: any) => {
-        if (res.data.token && res.data.uid) {
+        if (res.data.token && res.data.id) {
           this.token = res.data.token;
-          this.uid = res.data.uid;
+          this.uid = res.data.id;
           localStorage.setItem('token', this.token);
           localStorage.setItem('uid', this.uid);
-          loginComplete(this.uid);  // dispatcher, updates other stores
+          loginComplete(this.uid); // dispatcher, updates other stores
           this.emit('LOGIN_COMPLETE'); // eventemitter, updates views
         } else {
           console.log('error: ', res.data);

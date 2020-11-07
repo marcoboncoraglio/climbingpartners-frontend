@@ -16,7 +16,9 @@ class LocationStore extends EventEmitter {
 
   highAccuracy: boolean = false;
 
-  url: string = process.env.BACKEND_URL_TEST || 'http://localhost:4000/api';
+  url: string =
+    (process.env.BACKEND_URL_TEST as string) ||
+    'http://localhost:4000/api/' + 'locations/';
 
   getId() {
     return this.uid;
@@ -32,7 +34,7 @@ class LocationStore extends EventEmitter {
     if (this.uid !== undefined) {
       await axios({
         method: 'put',
-        url: `${this.url}/locations/${this.uid}`,
+        url: `${this.url}/${this.uid}`,
         data: { lat: location.lat, lng: location.lng },
         headers: {
           Authorization: 'Bearer ' + this.token,
@@ -76,7 +78,7 @@ class LocationStore extends EventEmitter {
     return new Promise((res) => {
       axios({
         method: 'get',
-        url: `${this.url}/locations`,
+        url: `${this.url}`,
         headers: {
           Authorization: 'Bearer ' + this.token,
         },
