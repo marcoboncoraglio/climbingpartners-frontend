@@ -7,17 +7,16 @@ class FriendStore extends EventEmitter {
   token: any = localStorage.getItem('token');
 
   friendList: Array<string> = [];
-
   friendRequests: Array<string> = [];
 
   url: string =
     process.env.BACKEND_URL_TEST || 'http://localhost:4000/api/friendLists';
 
-  onLogin() {
+  async onLogin() {
     this.uid = localStorage.getItem('uid');
     this.token = localStorage.getItem('token');
 
-    axios({
+    await axios({
       method: 'get',
       url: `${this.url}`,
       headers: {
@@ -29,10 +28,10 @@ class FriendStore extends EventEmitter {
     });
   }
 
-  sendFriendRequest(uid: string) {
+  async sendFriendRequest(uid: string) {
     let theirFriendRequests: Array<string> = [];
 
-    axios({
+    await axios({
       method: 'get',
       url: `${this.url}/requests/${uid}`,
       headers: {
@@ -44,7 +43,7 @@ class FriendStore extends EventEmitter {
       theirFriendRequests.push(this.uid);
 
       // notify that friend request has been sent
-      axios({
+      await axios({
         method: 'put',
         url: `${this.url}/requests/${uid}`,
         data: { friendRequests: theirFriendRequests },
@@ -55,10 +54,10 @@ class FriendStore extends EventEmitter {
     }
   }
 
-  acceptFriendRequest(uid: string) {
+  async acceptFriendRequest(uid: string) {
     let theirFriendList: Array<string> = [];
 
-    axios({
+    await axios({
       method: 'get',
       url: `${this.url}/requests/${uid}`,
       headers: {
@@ -68,7 +67,7 @@ class FriendStore extends EventEmitter {
 
     theirFriendList.push(this.uid);
 
-    axios({
+    await axios({
       method: 'put',
       url: `${this.url}/requests/${uid}`,
       data: { friendList: theirFriendList },

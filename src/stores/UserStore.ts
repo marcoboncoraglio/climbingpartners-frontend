@@ -12,16 +12,16 @@ class UserStore extends EventEmitter {
 
   url: string = process.env.BACKEND_URL_TEST || 'http://localhost:4000/api';
 
-  onLogin() {
+  async onLogin() {
     this.uid = localStorage.getItem('uid');
     this.token = localStorage.getItem('token');
 
-    this.initCard();
-    this.initDetails();
+    await this.initCard();
+    await this.initDetails();
   }
 
-  initCard(): any {
-    axios({
+  async initCard() {
+    await axios({
       method: 'get',
       url: `${this.url}/userCards`,
       headers: {
@@ -32,8 +32,8 @@ class UserStore extends EventEmitter {
     });
   }
 
-  initDetails(): any {
-    axios({
+  async initDetails() {
+    await axios({
       method: 'get',
       url: `${this.url}/userDetails`,
       headers: {
@@ -50,10 +50,10 @@ class UserStore extends EventEmitter {
 
   getDetails(uid?: string) {
     if (!uid) {
-      return new Promise((res) => {
+      return new Promise(async (res) => {
         if (this.details) res(this.details);
         else {
-          this.initDetails();
+          await this.initDetails();
           res(this.details);
         }
       });
@@ -72,10 +72,10 @@ class UserStore extends EventEmitter {
 
   getCard(uid?: string) {
     if (!uid) {
-      return new Promise((res) => {
+      return new Promise(async (res) => {
         if (this.card) res(this.card);
         else {
-          this.initCard();
+          await this.initCard();
           res(this.card);
         }
       });
