@@ -57,8 +57,9 @@ class LoginStore extends EventEmitter {
   logout() {
     this.token = null;
     this.uid = undefined;
-    localStorage.clear();
     this.username = 'username';
+    localStorage.clear();
+    this.emit('LOGOUT_COMPLETE');
   }
 
   getUid(): string {

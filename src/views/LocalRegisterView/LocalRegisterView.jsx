@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,7 +11,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useAlert } from 'react-alert';
 import { registerUserLocal } from '../../actions/LoginActions';
-import LoginStore from '../../stores/LoginStore';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,14 +41,6 @@ export default function LocalRegisterView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  useEffect(() => {
-    LoginStore.on('LOGIN_COMPLETE', () => props.history.push('/'));
-
-    return () => {
-      LoginStore.removeAllListeners();
-    };
-  });
 
   function handleChangeUsername(event) {
     setUsername(event.target.value);

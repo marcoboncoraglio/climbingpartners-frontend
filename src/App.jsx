@@ -13,13 +13,29 @@ import LocalRegisterView from './views/LocalRegisterView/LocalRegisterView';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import LoginStore from './stores/LoginStore';
-import { logoutUser } from './actions/LoginActions';
 
-const AuthenticatedRoute = ({ component: Component, condition, ...rest }) => (
+const AuthenticatedRoute = ({
+  component: Component,
+  isAuthenticated,
+  ...rest
+}) => (
   <Route
     {...rest}
     render={(props) =>
-      condition ? <Component {...props} /> : <Redirect to="/welcome" />
+      isAuthenticated ? <Component {...props} /> : <Redirect to="/welcome" />
+    }
+  />
+);
+
+const NonAuthenticatedRoute = ({
+  component: Component,
+  isAuthenticated,
+  ...rest
+}) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      !isAuthenticated ? <Component {...props} /> : <Redirect to="/" />
     }
   />
 );
@@ -31,6 +47,7 @@ class App extends Component {
 
   componentDidMount() {
     LoginStore.on('LOGIN_COMPLETE', this.handleLogin);
+    LoginStore.on('LOGOUT_COMPLETE', this.handleLogout);
   }
 
   handleLogin = () => {
@@ -38,7 +55,6 @@ class App extends Component {
   };
 
   handleLogout = () => {
-    logoutUser();
     this.setState({ loggedIn: false });
   };
 
@@ -50,45 +66,60 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/welcome" exact component={WelcomeView} />
-          <Route path="/login" exact component={LocalLoginView} />
-          <Route path="/register" exact component={LocalRegisterView} />
+          <NonAuthenticatedRoute
+            path="/welcome"
+            exact={true}
+            component={WelcomeView}
+            isAuthenticated={this.state.loggedIn}
+          />
+          <NonAuthenticatedRoute
+            path="/login"
+            exact={true}
+            component={LocalLoginView}
+            isAuthenticated={this.state.loggedIn}
+          />
+          <NonAuthenticatedRoute
+            path="/register"
+            exact={true}
+            component={LocalRegisterView}
+            isAuthenticated={this.state.loggedIn}
+          />
 
           <AuthenticatedRoute
             path="/"
             exact={true}
             component={MapView}
-            condition={this.state.loggedIn}
+            isAuthenticated={this.state.loggedIn}
           />
           <AuthenticatedRoute
             path="/friends"
             exact={true}
             component={FriendsView}
-            condition={this.state.loggedIn}
+            isAuthenticated={this.state.loggedIn}
           />
           <AuthenticatedRoute
             path="/messages"
             exact={true}
             component={MessagesView}
-            condition={this.state.loggedIn}
+            isAuthenticated={this.state.loggedIn}
           />
           <AuthenticatedRoute
             path="/profile"
             exact={true}
             component={ProfileView}
-            condition={this.state.loggedIn}
+            isAuthenticated={this.state.loggedIn}
           />
           <AuthenticatedRoute
             path="/profile/:id"
             exact={true}
             component={ProfileView}
-            condition={this.state.loggedIn}
+            isAuthenticated={this.state.loggedIn}
           />
           <AuthenticatedRoute
             path="/settings"
             exact={true}
             component={SettingsView}
-            condition={this.state.loggedIn}
+            isAuthenticated={this.state.loggedIn}
           />
         </Switch>
       </BrowserRouter>

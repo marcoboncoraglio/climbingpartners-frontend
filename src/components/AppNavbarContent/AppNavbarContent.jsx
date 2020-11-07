@@ -1,5 +1,5 @@
 import React from 'react';
-import './AppNavbarContent.css'
+import './AppNavbarContent.css';
 
 import { NavLink } from 'react-router-dom';
 
@@ -10,13 +10,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Divider from '@material-ui/core/Divider';
 
 import MailIcon from '@material-ui/icons/Mail';
-import LocationOnIcon from '@material-ui/icons/LocationOn'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import SettingsIcon from '@material-ui/icons/Settings'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import PeopleIcon from '@material-ui/icons/People'
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PeopleIcon from '@material-ui/icons/People';
 
-import {logoutUser} from '../../actions/LoginActions';
+import { logoutUser } from '../../actions/LoginActions';
 
 const NavbarContent = () => {
   return (
@@ -67,13 +67,18 @@ const NavbarContent = () => {
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>
-          <NavLink to="/welcome" onClick={()=> {logoutUser()}}>
+          <NavLink
+            to="/welcome"
+            onClick={() => {
+              logoutUser();
+            }}
+          >
             <ListItemText>Logout</ListItemText>
           </NavLink>
         </ListItem>
       </List>
     </div>
-  )
-}
+  );
+};
 
 export default NavbarContent;
