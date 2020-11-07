@@ -5,11 +5,6 @@ Application to find climbing partners around you
 
 ## Frontend
 
-bugs: 
-refeshing changes and breaks the state
-
-if we do not refresh, login and logout mechanism work
-
 move api requests to actions, store should be the place where we get data, not execute operations 
 
 ### General
@@ -53,9 +48,6 @@ move api requests to actions, store should be the place where we get data, not e
 
 ### Unit tests
 - write unit tests :)
-
-### Bugs
-- Default user img not loading, possible failing to load img from google profile
 
 ## Backend
 

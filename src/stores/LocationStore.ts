@@ -28,9 +28,9 @@ class LocationStore extends EventEmitter {
   }
 
   // only gets set once on login
-  setLocation(location: any) {
+  async setLocation(location: any) {
     if (this.uid !== undefined) {
-      axios({
+      await axios({
         method: 'put',
         url: `${this.url}/locations/${this.uid}`,
         data: { lat: location.lat, lng: location.lng },
