@@ -56,16 +56,17 @@ class AppViewProfileCard extends Component {
             <Button fullWidth component="span" color="primary">
               Message
             </Button>
-            {!FriendStore.isFriend(this.props.uid) && (
-              /*!FriendStore.hasRequestedFriendship(this.props.uid) && */ <Button
-                fullWidth
-                component="span"
-                color="primary"
-                onClick={() => FriendStore.sendFriendRequest(this.props.uid)}
-              >
-                Add friend
-              </Button>
-            )}
+            {!FriendStore.isFriend(this.props.uid) &&
+              !FriendStore.hasRequestedFriendship(this.props.uid) && (
+                <Button
+                  fullWidth
+                  component="span"
+                  color="primary"
+                  onClick={() => FriendStore.sendFriendRequest(this.props.uid)}
+                >
+                  Add friend
+                </Button>
+              )}
             {!FriendStore.isFriend(this.props.uid) &&
               FriendStore.hasRequestedFriendship(this.props.uid) && (
                 <div>
