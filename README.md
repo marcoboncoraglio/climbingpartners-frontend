@@ -8,12 +8,14 @@ Application to find climbing partners around you
 move api requests to actions, store should be the place where we get data, not execute operations 
 
 ### General
-- refactor AppViewProfileCard 
+- refactor AppViewProfileCard / add way to change name
 
 - migrate to react hooks/es6
     - search for every direct call to setState try to replace with useState hook
 
 - migrate to dev-dependencies in frontend
+
+- use react router between local login and register to avoid page reloading
 
 ### icons
 - icon for brand
