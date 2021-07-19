@@ -10,7 +10,7 @@ class LoginStore extends EventEmitter {
 
   url: string =
     (process.env.BACKEND_URL_TEST as string) ||
-    'http://localhost:4000/api/' + 'auth';
+    'http://localhost:4000/api/auth';
 
   loginLocal(username: string, password: string) {
     this.username = username;

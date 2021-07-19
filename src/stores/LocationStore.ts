@@ -18,7 +18,7 @@ class LocationStore extends EventEmitter {
 
   url: string =
     (process.env.BACKEND_URL_TEST as string) ||
-    'http://localhost:4000/api/' + 'locations/';
+    'http://localhost:4000/api/locations/';
 
   getId() {
     return this.uid;

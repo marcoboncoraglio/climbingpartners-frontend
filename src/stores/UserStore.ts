@@ -12,7 +12,7 @@ class UserStore extends EventEmitter {
 
   url: string =
     (process.env.BACKEND_URL_TEST as string) ||
-    'http://localhost:4000/api/' + 'users';
+    'http://localhost:4000/api/users';
 
   async onLogin() {
     this.uid = localStorage.getItem('uid');

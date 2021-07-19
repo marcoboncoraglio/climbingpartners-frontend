@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import { useAlert } from 'react-alert';
+// import { useAlert } from 'react-alert';
 import { loginUserLocal } from '../../actions/LoginActions';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LocalLoginView(props) {
   const classes = useStyles();
-  const alert = useAlert();
+  // const alert = useAlert();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
