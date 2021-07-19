@@ -9,10 +9,10 @@ import SettingsView from './views/SettingsView/SettingsView';
 import WelcomeView from './views/WelcomeView/WelcomeView';
 import LocalLoginView from './views/LocalLoginView/LocalLoginView';
 import LocalRegisterView from './views/LocalRegisterView/LocalRegisterView';
-
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import LoginStore from './stores/LoginStore';
+import { loginUserGoogle } from './actions/LoginActions';
 
 const AuthenticatedRoute = ({
   component: Component,
@@ -83,6 +83,26 @@ class App extends Component {
             exact={true}
             component={LocalRegisterView}
             isAuthenticated={this.state.loggedIn}
+          />
+          <NonAuthenticatedRoute
+            path="/login/google/redirect"
+            isAuthenticated={this.state.loggedIn}
+            component={(props) => {
+              const id = new URLSearchParams(props.location.search).get('id');
+              const token = new URLSearchParams(props.location.search).get(
+                'token'
+              );
+              loginUserGoogle(id, token);
+              return null;
+            }}
+          />
+          <NonAuthenticatedRoute
+            path="/login/google"
+            isAuthenticated={this.state.loggedIn}
+            component={() => {
+              window.location.href = 'http://localhost:4000/api/auth/google';
+              return null;
+            }}
           />
 
           <AuthenticatedRoute

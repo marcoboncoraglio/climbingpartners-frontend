@@ -1,6 +1,5 @@
 import { EventEmitter } from 'events';
 import dispatcher from '../dispatcher';
-import { loginComplete } from '../actions/LoginActions';
 const axios = require('axios');
 
 class LoginStore extends EventEmitter {
@@ -25,8 +24,7 @@ class LoginStore extends EventEmitter {
           this.uid = res.data.id;
           localStorage.setItem('token', this.token);
           localStorage.setItem('uid', this.uid);
-          loginComplete(this.uid);
-          this.emit('LOGIN_COMPLETE');
+          this.emit('LOGIN_COMPLETE'); // TODO: this does not redirect the user to logged in /
         } else {
           console.log('error: ', res.data);
           return res.data;
@@ -48,14 +46,21 @@ class LoginStore extends EventEmitter {
           this.uid = res.data.id;
           localStorage.setItem('token', this.token);
           localStorage.setItem('uid', this.uid);
-          loginComplete(this.uid); // dispatcher, updates other stores
-          this.emit('LOGIN_COMPLETE'); // eventemitter, updates views
+          this.emit('LOGIN_COMPLETE'); 
         } else {
           console.log('error: ', res.data);
           return res.data;
         }
       })
       .catch((err: any) => console.log(err));
+  }
+
+  loginGoogle(uid: string, token: string) {
+    this.uid = uid;
+    this.token = token;
+    localStorage.setItem('token', this.token);
+    localStorage.setItem('uid', this.uid);
+    this.emit('LOGIN_COMPLETE'); 
   }
 
   logout() {
@@ -82,6 +87,10 @@ class LoginStore extends EventEmitter {
       }
       case 'REGISTER': {
         this.registerLocal(action.username, action.password);
+        break;
+      }
+      case 'LOGIN_GOOGLE': {
+        this.loginGoogle(action.uid, action.token);
         break;
       }
       case 'LOGOUT': {

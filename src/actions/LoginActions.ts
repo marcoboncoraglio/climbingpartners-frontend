@@ -16,10 +16,11 @@ export function loginUserLocal(username: string, password: string) {
   });
 }
 
-export function loginComplete(uid: string) {
+export function loginUserGoogle(uid: string, token: string) {
   dispatcher.dispatch({
-    type: 'LOGIN_COMPLETE',
+    type: 'LOGIN_GOOGLE',
     uid: uid,
+    token: token,
   });
 }
 

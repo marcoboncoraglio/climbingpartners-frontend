@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// TODO: show errors returned by backend to the user
 export default function LocalRegisterView(props) {
   const classes = useStyles();
   const alert = useAlert();
