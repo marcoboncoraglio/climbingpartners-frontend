@@ -110,7 +110,7 @@ class AppEditProfileDetails extends Component {
       <Paper className="detailsContainer">
         <List className="listContainer">
           <ListItem>
-            <Typography variant="h4">Details</Typography>
+            <Typography variant="h5">Details</Typography>
           </ListItem>
           <ListItem>
             {

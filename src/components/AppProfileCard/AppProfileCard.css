@@ -8,3 +8,7 @@
     flex-grow: 1;
     min-height: 250px;
 }
+
+.profile-restofcard{
+    padding: 8px !important;
+}

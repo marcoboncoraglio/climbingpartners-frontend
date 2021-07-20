@@ -45,7 +45,7 @@ class AppProfileCard extends Component {
           <CardMedia image={defaultImageUrl} className="profile-image" />
         )}
         <CardContent className="profile-restofcard">
-          <Typography style={{ textAlign: 'center' }} variant="h4">
+          <Typography style={{ textAlign: 'center' }} variant="h5">
             {this.state.card.name}
           </Typography>
         </CardContent>

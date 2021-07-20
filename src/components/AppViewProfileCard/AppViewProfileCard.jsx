@@ -49,14 +49,14 @@ class AppViewProfileCard extends Component {
             />
           ))}
         <CardContent className="profile-restofcard">
-          <Typography style={{ textAlign: 'center' }} variant="h4">
+          <Typography style={{ textAlign: 'center' }} variant="h5">
             {this.state.card.name}
           </Typography>
-          <CardActions style={{ padding: 20 }}>
+          <CardActions style={{ padding: 5 }}>
             <Button fullWidth component="span" color="primary">
               Message
             </Button>
-            {!FriendStore.isFriend(this.props.uid) &&
+            {/* {!FriendStore.isFriend(this.props.uid) &&
               !FriendStore.hasRequestedFriendship(this.props.uid) && (
                 <Button
                   fullWidth
@@ -91,7 +91,7 @@ class AppViewProfileCard extends Component {
                     Decline
                   </Button>
                 </div>
-              )}
+              )} */}
           </CardActions>
         </CardContent>
       </Card>

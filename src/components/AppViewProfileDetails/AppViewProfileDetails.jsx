@@ -5,6 +5,8 @@ import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
+import ChipInput from 'material-ui-chip-input';
+
 import UserStore from '../../stores/UserStore';
 import './AppViewProfileDetails.css';
 
@@ -34,7 +36,7 @@ class AppViewProfileDetails extends Component {
       <Paper className="detailsContainer">
         <List>
           <ListItem>
-            <Typography variant="h4">Details</Typography>
+            <Typography variant="h5">Details</Typography>
           </ListItem>
           {this.state.details.birthday && (
             <ListItem>
@@ -67,41 +69,50 @@ class AppViewProfileDetails extends Component {
             </ListItem>
           )}
           <ListItem>
-            <Typography variant="h5">Languages Spoken</Typography>
+            <ChipInput
+              readOnly
+              fullWidth
+              label="Languages Spoken"
+              value={this.state.details.languagesSpoken}
+              chipRenderer={(value) => (
+                <Chip
+                  key={value.text}
+                  label={value.text}
+                  style={{ marginRight: '5px' }}
+                ></Chip>
+              )}
+            />
           </ListItem>
-          {this.state.details.languagesSpoken.length > 0 && (
-            <ListItem>
-              {this.state.details.languagesSpoken.map((lang, index) => {
-                return (
-                  <Chip key={index} label={lang} style={{ marginRight: 5 }} />
-                );
-              })}
-            </ListItem>
-          )}
           <ListItem>
-            <Typography variant="h5">Climbing Styles</Typography>
+            <ChipInput
+              readOnly
+              fullWidth
+              label="Climbing Styles"
+              value={this.state.details.climbingStyles}
+              chipRenderer={(value) => (
+                <Chip
+                  key={value.text}
+                  label={value.text}
+                  style={{ marginRight: '5px' }}
+                ></Chip>
+              )}
+            />
           </ListItem>
-          {this.state.details.climbingStyles.length > 0 && (
-            <ListItem>
-              {this.state.details.climbingStyles.map((style, index) => {
-                return (
-                  <Chip key={index} label={style} style={{ marginRight: 5 }} />
-                );
-              })}
-            </ListItem>
-          )}
           <ListItem>
-            <Typography variant="h5">Available Equipment</Typography>
+            <ChipInput
+              readOnly
+              fullWidth
+              label="Equipment"
+              value={this.state.details.availableEquipment}
+              chipRenderer={(value) => (
+                <Chip
+                  key={value.text}
+                  label={value.text}
+                  style={{ marginRight: '5px' }}
+                ></Chip>
+              )}
+            />
           </ListItem>
-          {this.state.details.availableEquipment.length > 0 && (
-            <ListItem>
-              {this.state.details.availableEquipment.map((equip, index) => {
-                return (
-                  <Chip key={index} label={equip} style={{ marginRight: 5 }} />
-                );
-              })}
-            </ListItem>
-          )}
         </List>
       </Paper>
     );
