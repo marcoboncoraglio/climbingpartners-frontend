@@ -107,8 +107,8 @@ class AppEditProfileDetails extends Component {
 
   render() {
     return (
-      <Paper className="margintop">
-        <List>
+      <Paper className="detailsContainer">
+        <List className="listContainer">
           <ListItem>
             <Typography variant="h4">Details</Typography>
           </ListItem>

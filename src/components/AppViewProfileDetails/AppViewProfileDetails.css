@@ -1,4 +1,10 @@
-.margintop{
-    margin-top: 2%;
-    margin-bottom: 2%;
+.detailsContainer{
+    width: 96%;
+    margin: auto;
 }
+
+@media only screen and (max-width: 960px) {
+    .detailsContainer{
+        margin-top: 5%;
+    }
+  }
