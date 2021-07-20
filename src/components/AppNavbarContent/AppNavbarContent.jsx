@@ -24,7 +24,7 @@ const navBarButtonStyles = {
   // letterSpacing: '.15rem',
 };
 
-const NavbarContent = () => {
+const NavbarContent = (props) => {
   return (
     <div className="content-wrapper">
       <List>
@@ -57,7 +57,12 @@ const NavbarContent = () => {
           ></ListItemText>
         </ListItem> */}
 
-        <ListItem button component={NavLink} to="/profile">
+        <ListItem
+          button
+          component={NavLink}
+          to="/profile"
+          onClick={props.toggleDrawer(false)}
+        >
           <ListItemIcon>
             <AccountCircleIcon />
           </ListItemIcon>

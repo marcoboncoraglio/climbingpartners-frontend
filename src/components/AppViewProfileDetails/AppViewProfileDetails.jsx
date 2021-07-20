@@ -34,7 +34,7 @@ class AppViewProfileDetails extends Component {
   render() {
     return (
       <Paper className="detailsContainer">
-        <List>
+        <List className="listContainer">
           <ListItem>
             <Typography variant="h5">Details</Typography>
           </ListItem>

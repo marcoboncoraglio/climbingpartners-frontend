@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './AppNavbar.css'
+import './AppNavbar.css';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,11 +7,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import AppNavbarContent from '../AppNavbarContent/AppNavbarContent'
+import AppNavbarContent from '../AppNavbarContent/AppNavbarContent';
 
 class AppNavbar extends Component {
   state = {
-    open: false
+    open: false,
   };
 
   toggleDrawer = (isOpen) => () => {
@@ -34,7 +34,7 @@ class AppNavbar extends Component {
           </Toolbar>
         </AppBar>
         <Drawer open={this.state.open} onClose={this.toggleDrawer(false)}>
-          <AppNavbarContent />
+          <AppNavbarContent toggleDrawer={this.toggleDrawer} />
         </Drawer>
       </React.Fragment>
     );
