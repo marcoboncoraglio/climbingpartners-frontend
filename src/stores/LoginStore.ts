@@ -24,7 +24,7 @@ class LoginStore extends EventEmitter {
           this.uid = res.data.id;
           localStorage.setItem('token', this.token);
           localStorage.setItem('uid', this.uid);
-          this.emit('LOGIN_COMPLETE'); // TODO: this does not redirect the user to logged in /
+          this.emit('LOGIN_COMPLETE');
         } else {
           console.log('error: ', res.data);
           return res.data;
@@ -46,7 +46,7 @@ class LoginStore extends EventEmitter {
           this.uid = res.data.id;
           localStorage.setItem('token', this.token);
           localStorage.setItem('uid', this.uid);
-          this.emit('LOGIN_COMPLETE'); 
+          this.emit('LOGIN_COMPLETE');
         } else {
           console.log('error: ', res.data);
           return res.data;
@@ -60,7 +60,7 @@ class LoginStore extends EventEmitter {
     this.token = token;
     localStorage.setItem('token', this.token);
     localStorage.setItem('uid', this.uid);
-    this.emit('LOGIN_COMPLETE'); 
+    this.emit('LOGIN_COMPLETE');
   }
 
   logout() {

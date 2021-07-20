@@ -93,6 +93,7 @@ class App extends Component {
                 'token'
               );
               loginUserGoogle(id, token);
+              window.location.reload();
               return null;
             }}
           />
