@@ -4,6 +4,7 @@ import './AppMap.css';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { setUserLocation } from '../../actions/LocationActions';
 import LocationStore from '../../stores/LocationStore';
+import { withRouter } from 'react-router';
 
 class AppMap extends Component {
   state = {
@@ -85,10 +86,12 @@ class AppMap extends Component {
             const pos = [locationObject.lat, locationObject.lng];
             return (
               <Marker
+                as
                 key={locationObject.id}
                 position={pos}
-                onclick={() => {
-                  window.location = `profile/${locationObject.id}`;
+                onClick={() => {
+                  const profile = `profile/${locationObject.id}`;
+                  this.props.history.push(profile);
                 }}
               />
             );
@@ -98,4 +101,4 @@ class AppMap extends Component {
   }
 }
 
-export default AppMap;
+export default withRouter(AppMap)
