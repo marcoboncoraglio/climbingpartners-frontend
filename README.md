@@ -7,13 +7,12 @@ Look into deploy on aws: frontend S3 buckets, backend AWS-Cli and AWS-SAM, chat 
 ## Frontend
 
 Optional: move api requests to actions, store should be the place where we get data, not execute operations 
+Implement code splitting with react.lazy and suspense
 
 ### General
 - refactor AppViewProfileCard / add way to change name
 
 - migrate to dev-dependencies in frontend
-
-- use react router between local login and register to avoid page reloading
 
 ### icons
 - icon for brand
