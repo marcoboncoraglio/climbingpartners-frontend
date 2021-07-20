@@ -11,8 +11,9 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-// import { useAlert } from 'react-alert';
+// import { useAlert } from 'react-alert'; // error messages from backend
 import { loginUserLocal } from '../../actions/LoginActions';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -116,7 +117,7 @@ export default function LocalLoginView(props) {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/register" variant="body2">
+              <Link component={NavLink} to="/register" variant="body2">
                 {"Don't have an account? Register"}
               </Link>
             </Grid>
