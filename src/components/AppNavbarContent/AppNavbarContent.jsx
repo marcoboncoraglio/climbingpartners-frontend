@@ -18,63 +18,79 @@ import PeopleIcon from '@material-ui/icons/People';
 
 import { logoutUser } from '../../actions/LoginActions';
 
+const navBarButtonStyles = {
+  color: '#7a7a7a',
+  // fontWeight: 500,
+  // letterSpacing: '.15rem',
+};
+
 const NavbarContent = () => {
   return (
     <div className="content-wrapper">
       <List>
-        <ListItem>
+        <ListItem button component={NavLink} to="/">
           <ListItemIcon>
             <LocationOnIcon />
           </ListItemIcon>
-          <NavLink to="/">
-            <ListItemText>Map</ListItemText>
-          </NavLink>
+          <ListItemText
+            primaryTypographyProps={{ style: navBarButtonStyles }}
+            primary="Map"
+          />
         </ListItem>
-        <ListItem>
+        <ListItem button component={NavLink} to="/messages">
           <ListItemIcon>
             <MailIcon />
           </ListItemIcon>
-          <NavLink to="/messages">
-            <ListItemText>Messages</ListItemText>
-          </NavLink>
+          <ListItemText
+            primaryTypographyProps={{ style: navBarButtonStyles }}
+            primary="Messages"
+          />
         </ListItem>
-        <ListItem>
+
+        {/* <ListItem button component={NavLink} to="/friends">
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
-          <NavLink to="/friends">
-            <ListItemText>Friends</ListItemText>
-          </NavLink>
-        </ListItem>
-        <ListItem>
+          <ListItemText
+            primaryTypographyProps={{ style: navBarButtonStyles }}
+            primary="Friends"
+          ></ListItemText>
+        </ListItem> */}
+
+        <ListItem button component={NavLink} to="/profile">
           <ListItemIcon>
             <AccountCircleIcon />
           </ListItemIcon>
-          <NavLink to="/profile">
-            <ListItemText>Profile</ListItemText>
-          </NavLink>
+          <ListItemText
+            primaryTypographyProps={{ style: navBarButtonStyles }}
+            primary="Profile"
+          ></ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem button component={NavLink} to="/settings">
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
-          <NavLink to="/settings">
-            <ListItemText>Settings</ListItemText>
-          </NavLink>
+          <ListItemText
+            primaryTypographyProps={{ style: navBarButtonStyles }}
+            primary="Settings"
+          >
+            Settings
+          </ListItemText>
         </ListItem>
         <Divider />
-        <ListItem>
+        <ListItem
+          button
+          onClick={() => {
+            logoutUser();
+          }}
+        >
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>
-          <NavLink
-            to="/welcome"
-            onClick={() => {
-              logoutUser();
-            }}
-          >
-            <ListItemText>Logout</ListItemText>
-          </NavLink>
+          <ListItemText
+            primaryTypographyProps={{ style: navBarButtonStyles }}
+            primary="Logout"
+          ></ListItemText>
         </ListItem>
       </List>
     </div>

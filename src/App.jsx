@@ -112,12 +112,14 @@ class App extends Component {
             component={MapView}
             isAuthenticated={this.state.loggedIn}
           />
-          <AuthenticatedRoute
+
+          {/* <AuthenticatedRoute
             path="/friends"
             exact={true}
             component={FriendsView}
             isAuthenticated={this.state.loggedIn}
-          />
+          /> */}
+
           <AuthenticatedRoute
             path="/messages"
             exact={true}
